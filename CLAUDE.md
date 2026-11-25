@@ -90,8 +90,8 @@ deactivate); orders (filter, update status → statusHistory, courier + tracking
   before passing to client components.
 
 ## Seed (`npm run seed` → `scripts/seed.js`)
-Flip Baz ALWAYS uses its own database (`MONGODB_DB`, default `flipbaz`, forced in `lib/db.js`
-regardless of the URI path). The seed refuses to run if that database contains any collection
+Flip Baz uses the database named in MONGODB_URI (optional MONGODB_DB override; `lib/db.js`).
+That database is Flip Baz-only. The seed refuses to run if it contains any collection
 Flip Baz does not own (`scripts/seed-guard.js`). Never add an override for this.
 1 admin (ADMIN_EMAIL/ADMIN_PASSWORD from `.env.local`), 1 demo seller with an active
 membership, 4 plans (1/3/6/12 months, discounted, 3-month recommended), 4 categories, ~16
