@@ -24,8 +24,10 @@ original. Never copy their text or assets.
   Roles: `SELLER`, `ADMIN`.
 - Validation: zod. Mutations via Server Actions or route handlers.
 - JSDoc on key functions and models.
-- Image uploads go to `/public/uploads` behind ONE storage helper (`lib/storage.js`) so it can
-  be swapped for Cloudinary/S3 later.
+- Image uploads go through ONE storage helper (`lib/storage.js`): saved to `storage/uploads`
+  (not /public: `next start` 404s files added to /public after build) and served by the
+  `/uploads/[folder]/[name]` route; payment screenshots are owner/admin only. The module is swappable
+  for Cloudinary/S3 later.
 - Light/dark toggle, fully responsive, mobile-first (most users are on phones).
 - Currency PKR, formatted `Rs 1,500` (`lib/format.js`).
 
@@ -131,6 +133,7 @@ lib/
   serialize.js         lean doc → plain JSON
   validators/          zod schemas
 scripts/seed.js        seed script
-public/uploads/        uploaded + seeded images
+storage/uploads/       uploaded images, served by app/uploads/[folder]/[name] (payments private)
+public/seed/           seeded placeholder images (committed)
 proxy.js               route protection (Next 16 "proxy", formerly middleware)
 ```

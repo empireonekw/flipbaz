@@ -1,0 +1,37 @@
+import { connectDB } from "@/lib/db";
+import { Payment } from "@/lib/models";
+import { getCurrentUser } from "@/lib/auth/dal";
+import { PRIVATE_FOLDERS, readUpload } from "@/lib/storage";
+
+/**
+ * GET /uploads/[folder]/[name]
+ * Serves files saved by lib/storage.js. Product and category images are
+ * public; payment screenshots are visible only to the seller who uploaded
+ * them and to admins.
+ */
+export async function GET(_request, { params }) {
+  const { folder, name } = await params;
+
+  if (PRIVATE_FOLDERS.includes(folder)) {
+    const user = await getCurrentUser();
+    if (!user) return new Response("Not found", { status: 404 });
+    if (user.role !== "ADMIN") {
+      await connectDB();
+      const owns = await Payment.exists({ user: user.id, screenshotUrl: `/uploads/${folder}/${name}` });
+      if (!owns) return new Response("Not found", { status: 404 });
+    }
+  }
+
+  const file = await readUpload(folder, name);
+  if (!file) return new Response("Not found", { status: 404 });
+
+  return new Response(file.bytes, {
+    headers: {
+      "Content-Type": file.contentType,
+      "X-Content-Type-Options": "nosniff",
+      "Cache-Control": PRIVATE_FOLDERS.includes(folder)
+        ? "private, no-store"
+        : "public, max-age=31536000, immutable",
+    },
+  });
+}

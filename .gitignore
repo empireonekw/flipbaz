@@ -42,9 +42,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# user uploads (local storage driver); seeded placeholders live in /public/seed
-/public/uploads/*
-!/public/uploads/.gitkeep
+# user uploads (local storage driver, served by app/uploads); seed images live in /public/seed
+/storage/uploads/*
+!/storage/uploads/.gitkeep
 
 # local Claude settings
 .claude/settings.local.json
