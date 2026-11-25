@@ -1,12 +1,13 @@
 /**
  * Flip Baz seed script: `npm run seed`
  *
- * Clears and refills ONLY Flip Baz's own collections (the models below). It
- * never drops the database, so anything else stored in the same database is
- * left alone.
+ * Clears and refills ONLY Flip Baz's own collections (the models below), in
+ * Flip Baz's own database (MONGODB_DB, default "flipbaz"). It never drops a
+ * database, and it REFUSES to run if that database contains any collection
+ * Flip Baz doesn't own (see seed-guard.js), so another app's data can't be hit.
  *
  * Reads from .env.local (loaded by `node --env-file-if-exists`):
- *   MONGODB_URI, ADMIN_EMAIL, ADMIN_PASSWORD,
+ *   MONGODB_URI, MONGODB_DB (optional), ADMIN_EMAIL, ADMIN_PASSWORD,
  *   DEMO_SELLER_EMAIL, DEMO_SELLER_PASSWORD (optional demo seller login)
  *
  * Also writes SVG placeholder images to /public/seed.
@@ -15,7 +16,9 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { connectDB, disconnectDB } from "../lib/db.js";
+import mongoose from "mongoose";
+import { connectDB, disconnectDB, DB_NAME } from "../lib/db.js";
+import { findForeignCollections } from "./seed-guard.js";
 import { hashPassword } from "../lib/auth/password.js";
 import { slugify } from "../lib/format.js";
 import { computeOrderTotals } from "../lib/pricing.js";
@@ -123,8 +126,21 @@ async function main() {
     process.exit(1);
   }
 
-  console.log("• Connecting to MongoDB …");
+  console.log(`• Connecting to MongoDB (database "${DB_NAME}") …`);
   await connectDB();
+
+  const foreign = await findForeignCollections(
+    mongoose.connection.db,
+    OWNED_MODELS.map((M) => M.collection.collectionName)
+  );
+  if (foreign.length) {
+    console.error(`✖ Database "${DB_NAME}" also contains collections Flip Baz doesn't own:`);
+    console.error(`    ${foreign.join(", ")}`);
+    console.error("  It looks shared with another app, so nothing was changed.");
+    console.error("  Set MONGODB_DB in .env.local to a database used only by Flip Baz (e.g. flipbaz).");
+    process.exitCode = 1;
+    return;
+  }
 
   console.log("• Clearing Flip Baz collections (database itself is kept) …");
   for (const Model of OWNED_MODELS) {
