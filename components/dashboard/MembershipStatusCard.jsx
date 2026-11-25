@@ -29,7 +29,7 @@ export default function MembershipStatusCard({ access, pending, showActions = tr
       </div>
 
       {access.state === "ACTIVE" && m && (
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div>
             <p className="text-xs text-muted">Plan</p>
             <p className="font-semibold">{m.planSnapshot?.name}</p>

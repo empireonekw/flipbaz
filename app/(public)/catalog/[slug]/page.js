@@ -65,7 +65,7 @@ function PricePanel({ product, access }) {
       <p className="mt-3 text-xs text-muted">
         Profit estimate = suggested price − your cost − {formatPKR(DEFAULT_SHIPPING_FEE)} shipping.
       </p>
-      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {!access.isAdmin && (
           <Link href={`/dashboard/orders/new?product=${product.slug}`} className={buttonClass({ variant: "accent", className: "sm:col-span-2" })}>
             Order this for a customer
@@ -113,7 +113,7 @@ async function ProductDetail({ params }) {
         </ol>
       </nav>
 
-      <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
         <ProductGallery images={product.images} title={product.title} />
 
         <div>
@@ -183,7 +183,7 @@ export default function ProductPage({ params }) {
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
       <Suspense
         fallback={
-          <div className="grid gap-8 lg:grid-cols-2" aria-hidden="true">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2" aria-hidden="true">
             <div className="aspect-square animate-pulse rounded-[var(--radius-card)] bg-surface-2" />
             <div className="space-y-4">
               <div className="h-10 w-3/4 animate-pulse rounded-lg bg-surface-2" />

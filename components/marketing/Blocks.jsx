@@ -12,7 +12,7 @@ import { siteConfig, whatsappDisplay, whatsappLink } from "@/lib/config";
 /** "Who it's for" cards. */
 export function AudienceGrid() {
   return (
-    <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {audiences.map((a) => (
         <li key={a.title} className="rounded-[var(--radius-card)] border border-line bg-surface p-6 shadow-sm">
           <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300">
@@ -29,7 +29,7 @@ export function AudienceGrid() {
 /** Numbered 4-step process. */
 export function StepsList() {
   return (
-    <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <ol className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {steps.map((s, i) => (
         <li key={s.title} className="relative rounded-[var(--radius-card)] border border-line bg-surface p-6 shadow-sm">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-700 text-lg font-extrabold text-white dark:bg-brand-500 dark:text-brand-950">
@@ -48,7 +48,7 @@ const benefitIcons = ["box", "tag", "image", "shield", "truck", "chat", "chart",
 /** Member benefits grid. */
 export function BenefitsGrid() {
   return (
-    <ul className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+    <ul className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
       {benefits.map((b, i) => (
         <li key={b.title} className="flex gap-4">
           <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-50 text-accent-700 dark:bg-accent-900/40 dark:text-accent-200">
@@ -114,7 +114,7 @@ export function ContactBlock() {
   return (
     <div className="relative overflow-hidden rounded-[var(--radius-card)] bg-brand-900 px-6 py-12 text-white sm:px-12">
       <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-accent-500/30 blur-3xl" />
-      <div className="relative grid items-center gap-8 md:grid-cols-[1.5fr_1fr]">
+      <div className="relative grid grid-cols-1 items-center gap-8 md:grid-cols-[1.5fr_1fr]">
         <div>
           <h2 className="text-balance text-3xl font-extrabold tracking-tight">Questions before you join?</h2>
           <p className="mt-3 max-w-xl text-brand-100">

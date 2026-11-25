@@ -32,7 +32,7 @@ export default function SignupForm() {
         defaultValue={v.email}
         error={errors.email}
       />
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Field
           label="Mobile number"
           name="phone"
@@ -55,7 +55,7 @@ export default function SignupForm() {
         />
       </div>
       <Field label="City" name="city" autoComplete="address-level2" required defaultValue={v.city} error={errors.city} />
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Field
           label="Password"
           name="password"

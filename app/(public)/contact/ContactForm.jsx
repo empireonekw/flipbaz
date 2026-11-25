@@ -24,7 +24,7 @@ export default function ContactForm() {
   return (
     <form action={formAction} className="space-y-5" noValidate>
       {state.message && <Alert tone="error">{state.message}</Alert>}
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Field label="Your name" name="name" autoComplete="name" required defaultValue={v.name} error={errors.name} />
         <Field
           label="Email"

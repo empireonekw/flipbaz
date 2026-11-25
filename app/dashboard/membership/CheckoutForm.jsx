@@ -30,7 +30,7 @@ export default function CheckoutForm({ plans, accounts, defaultPlanId }) {
 
       <fieldset>
         <legend className="mb-3 text-lg font-bold">1. Choose your plan</legend>
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {plans.map((p) => {
             const save = planDiscountPercent(p.pricePerMonth, base);
             return (

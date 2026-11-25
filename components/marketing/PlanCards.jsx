@@ -15,7 +15,7 @@ export default function PlanCards({ plans, signedIn = false }) {
   const base = plans.find((p) => p.months === 1)?.pricePerMonth ?? plans[0].pricePerMonth;
 
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {plans.map((plan) => {
         const save = planDiscountPercent(plan.pricePerMonth, base);
         const checkout = `/dashboard/membership?plan=${plan._id}`;

@@ -7,8 +7,10 @@ import DashboardNav, { NavList } from "@/components/dashboard/DashboardNav";
 
 const LINKS = [
   { href: "/dashboard", label: "Overview", exact: true },
+  { href: "/dashboard/orders/new", label: "New order", exact: true },
+  { href: "/dashboard/orders", label: "Orders", exact: false, notPrefix: "/dashboard/orders/new" },
   { href: "/dashboard/membership", label: "Membership" },
-  { href: "/catalog", label: "Catalog" },
+  { href: "/dashboard/profile", label: "Profile" },
 ];
 
 /**

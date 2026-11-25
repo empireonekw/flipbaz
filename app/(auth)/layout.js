@@ -7,7 +7,7 @@ import CurrentYear from "@/components/ui/CurrentYear";
  */
 export default function AuthLayout({ children }) {
   return (
-    <div className="grid flex-1 lg:grid-cols-2">
+    <div className="grid grid-cols-1 flex-1 lg:grid-cols-2">
       <aside className="relative hidden overflow-hidden bg-brand-900 p-12 text-white lg:flex lg:flex-col lg:justify-between">
         <div
           aria-hidden="true"

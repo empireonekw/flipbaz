@@ -6,11 +6,14 @@ import { usePathname } from "next/navigation";
 /**
  * Section tabs for the seller dashboard; scrolls sideways on phones.
  * Uses usePathname, so the layout renders it inside <Suspense>.
- * @param {{ links: { href: string, label: string, exact?: boolean }[] }} props
+ * @param {{ links: { href: string, label: string, exact?: boolean, notPrefix?: string }[] }} props
+ *   notPrefix: a sub-path that belongs to another tab (e.g. Orders vs New order)
  */
 export default function DashboardNav({ links }) {
   const pathname = usePathname();
-  return <NavList links={links} isActive={(l) => (l.exact ? pathname === l.href : pathname.startsWith(l.href))} />;
+  const isActive = (l) =>
+    l.exact ? pathname === l.href : pathname.startsWith(l.href) && !(l.notPrefix && pathname.startsWith(l.notPrefix));
+  return <NavList links={links} isActive={isActive} />;
 }
 
 /**

@@ -14,7 +14,7 @@ export default function CatalogFilters({ categories, sorts, current }) {
   const submitOnChange = (e) => e.currentTarget.form?.requestSubmit();
 
   return (
-    <Form action="/catalog" className="grid gap-3 sm:grid-cols-[1fr_auto_auto_auto]" role="search">
+    <Form action="/catalog" className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_auto_auto]" role="search">
       <div>
         <label htmlFor="catalog-q" className="sr-only">
           Search products

@@ -26,7 +26,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden">
         <div aria-hidden="true" className="pointer-events-none absolute -top-40 right-0 h-[32rem] w-[32rem] rounded-full bg-brand-300/30 blur-3xl dark:bg-brand-700/20" />
         <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-accent-300/25 blur-3xl dark:bg-accent-700/10" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pb-16 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-2 lg:pb-24">
+        <div className="relative mx-auto grid grid-cols-1 max-w-6xl items-center gap-12 px-4 pb-16 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-2 lg:pb-24">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-muted">
               <span className="h-2 w-2 rounded-full bg-accent-500" aria-hidden="true" />

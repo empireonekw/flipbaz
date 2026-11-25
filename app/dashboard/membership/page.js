@@ -48,7 +48,7 @@ async function MembershipContent({ searchParams }) {
           <h2 id="review-heading" className="text-lg font-bold">
             Payment under review
           </h2>
-          <dl className="mt-4 grid gap-4 text-sm sm:grid-cols-2">
+          <dl className="mt-4 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
             <div>
               <dt className="text-muted">Plan</dt>
               <dd className="font-semibold">{pending.membership.planSnapshot?.name}</dd>

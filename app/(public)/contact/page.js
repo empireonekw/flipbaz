@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1.4fr] lg:py-16">
+    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1.4fr] lg:py-16">
       <div>
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Talk to us</h1>
         <p className="mt-3 text-muted">

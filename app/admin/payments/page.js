@@ -59,7 +59,7 @@ async function PaymentsQueue({ searchParams }) {
         <ul className="mt-6 space-y-4">
           {list.map((p) => (
             <li key={p._id} className="rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-sm">
-              <div className="grid gap-5 md:grid-cols-[1fr_auto]">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_auto]">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${statusBadge[p.status]}`}>{p.status}</span>
@@ -70,7 +70,7 @@ async function PaymentsQueue({ searchParams }) {
                     </span>
                   </div>
                   <p className="mt-2 text-2xl font-extrabold">{formatPKR(p.amount)}</p>
-                  <dl className="mt-3 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
+                  <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
                     <div>
                       <dt className="text-muted">Seller</dt>
                       <dd className="font-medium">

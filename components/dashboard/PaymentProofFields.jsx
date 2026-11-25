@@ -43,7 +43,7 @@ export default function PaymentProofFields({ accounts, amount, errors, values = 
     <div className="space-y-6">
       <fieldset>
         <legend className="mb-2 text-sm font-semibold">How will you pay?</legend>
-        <div className="grid gap-2 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
           {accounts.map((a) => (
             <label
               key={a.method}
