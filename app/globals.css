@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Dark mode follows a `.dark` class on <html> (set by the theme toggle). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Flip Baz palette
+ *  - brand: "Indus teal", deep and trustworthy
+ *  - accent: "Sialkot saffron", warm leather-amber for calls to action
+ *  - neutrals: warm stone
+ */
+@theme {
+  --color-brand-50: #edfcf6;
+  --color-brand-100: #d3f8e8;
+  --color-brand-200: #aaefd6;
+  --color-brand-300: #72e0bf;
+  --color-brand-400: #3ac9a3;
+  --color-brand-500: #16ad8a;
+  --color-brand-600: #0a8c71;
+  --color-brand-700: #0a705c;
+  --color-brand-800: #0c594b;
+  --color-brand-900: #0c493f;
+  --color-brand-950: #032a24;
+
+  --color-accent-50: #fff8eb;
+  --color-accent-100: #feeac6;
+  --color-accent-200: #fdd388;
+  --color-accent-300: #fcb64a;
+  --color-accent-400: #fb9d20;
+  --color-accent-500: #f27a07;
+  --color-accent-600: #d65802;
+  --color-accent-700: #b13b06;
+  --color-accent-800: #902e0c;
+  --color-accent-900: #76270d;
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.25rem;
 }
 
+/* Semantic surface tokens, swapped for dark mode. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --page: #faf8f5;
+  --surface: #ffffff;
+  --surface-2: #f3efe9;
+  --ink: #1c1917;
+  --muted: #57534e;
+  --line: #e7e2da;
+  color-scheme: light;
+}
+
+.dark {
+  --page: #0e1412;
+  --surface: #151d1a;
+  --surface-2: #1c2723;
+  --ink: #f4f1ec;
+  --muted: #a8a29e;
+  --line: #2a3632;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--page);
+  color: var(--ink);
+}
+
+/* Visible, consistent keyboard focus everywhere. */
+:focus-visible {
+  outline: 3px solid var(--color-brand-500);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
