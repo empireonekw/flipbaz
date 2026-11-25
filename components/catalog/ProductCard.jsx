@@ -8,7 +8,7 @@ import { formatPKR } from "@/lib/format";
  * (i.e. for members); everyone else sees a lock.
  * @param {{ product: Object, isMember?: boolean, state?: string, priority?: boolean }} props
  */
-export default function ProductCard({ product, isMember = false, state = "NONE", priority = false }) {
+export default function ProductCard({ product, isMember = false, state = "GUEST", priority = false }) {
   const href = `/catalog/${product.slug}`;
   return (
     <article className="group flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface shadow-sm transition hover:shadow-md">

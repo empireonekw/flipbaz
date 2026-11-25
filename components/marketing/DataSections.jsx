@@ -4,6 +4,7 @@ import ProductCard from "@/components/catalog/ProductCard";
 import PlanCards from "./PlanCards";
 import { getActivePlans, getPreviewProducts } from "@/lib/catalog";
 import { getCurrentUser } from "@/lib/auth/dal";
+import { getMemberAccess } from "@/lib/membership";
 
 /**
  * Database-backed sections. They render at request time behind <Suspense>,
@@ -19,11 +20,13 @@ function Unavailable({ what }) {
   );
 }
 
-/** Grid of products WITHOUT prices (the query never selects them). */
+/** Product grid; prices only for members (guests' query never selects them). */
 export async function CatalogPreview({ limit = 8 }) {
   let products;
+  let access;
   try {
-    products = await getPreviewProducts(limit);
+    access = await getMemberAccess();
+    products = await getPreviewProducts({ isMember: access.isMember }, limit);
   } catch (err) {
     unstable_rethrow(err);
     console.error("CatalogPreview failed:", err.message);
@@ -34,7 +37,7 @@ export async function CatalogPreview({ limit = 8 }) {
     <>
       <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
         {products.map((p, i) => (
-          <ProductCard key={p._id} product={p} isMember={false} priority={i < 2} />
+          <ProductCard key={p._id} product={p} isMember={access.isMember} state={access.state} priority={i < 2} />
         ))}
       </div>
       <div className="mt-10 text-center">

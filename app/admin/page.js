@@ -1,23 +1,27 @@
+import { Suspense } from "react";
+import Link from "next/link";
 import { requireAdmin } from "@/lib/auth/dal";
-import LogoutButton from "@/components/auth/LogoutButton";
-import Logo from "@/components/ui/Logo";
 
 export const metadata = { title: "Admin" };
 
-/**
- * Admin home (phase 2 placeholder: proves the ADMIN-only guard works).
- * Stats and management screens arrive in phase 6.
- */
-export default async function AdminPage() {
+/** Admin home (stats arrive in phase 6). */
+async function AdminHome() {
   const user = await requireAdmin();
   return (
-    <main className="mx-auto w-full max-w-5xl p-6">
-      <div className="flex items-center justify-between">
-        <Logo href="/admin" />
-        <LogoutButton />
-      </div>
-      <h1 className="mt-10 text-3xl font-extrabold tracking-tight">Admin panel</h1>
-      <p className="mt-2 text-muted">Signed in as {user.email} ({user.role}).</p>
-    </main>
+    <>
+      <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Admin panel</h1>
+      <p className="mt-1 text-muted">Signed in as {user.email}.</p>
+      <Link href="/admin/payments" className="mt-6 inline-block font-semibold text-brand-700 underline dark:text-brand-400">
+        Review pending payments →
+      </Link>
+    </>
+  );
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense fallback={<div className="h-32 animate-pulse rounded-2xl bg-surface-2" />}>
+      <AdminHome />
+    </Suspense>
   );
 }

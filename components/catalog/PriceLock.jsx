@@ -2,12 +2,12 @@ import Link from "next/link";
 
 /**
  * Shown in place of prices for guests and non-members.
- * @param {{ state?: "NONE"|"PENDING"|"EXPIRED", compact?: boolean }} props
+ * @param {{ state?: "GUEST"|"NONE"|"PENDING"|"EXPIRED", compact?: boolean }} props
  */
-export default function PriceLock({ state = "NONE", compact = false }) {
+export default function PriceLock({ state = "GUEST", compact = false }) {
   const text =
     state === "PENDING" ? "Prices unlock once payment is approved" : state === "EXPIRED" ? "Renew to see price" : "Join to see price";
-  const href = state === "NONE" ? "/pricing" : "/dashboard/membership";
+  const href = state === "GUEST" ? "/pricing" : "/dashboard/membership";
   return (
     <Link
       href={href}

@@ -30,10 +30,10 @@ function PricePanel({ product, access }) {
           Members see the wholesale price, a suggested selling price, an estimated profit per sale, and
           can download listing photos and order this for their customers.
         </p>
-        {access.state === "NONE" && (
+        {(access.state === "GUEST" || access.state === "NONE") && (
           <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-            <Button href="/pricing" variant="accent">
-              See membership plans
+            <Button href={access.user ? "/dashboard/membership" : "/pricing"} variant="accent">
+              {access.user ? "Choose a plan" : "See membership plans"}
             </Button>
             {!access.user && (
               <Button href={`/login?next=/catalog/${product.slug}`} variant="outline">

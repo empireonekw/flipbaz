@@ -8,13 +8,13 @@ import { buttonClass } from "./Button";
  * form's Server Action is running.
  * @param {{ pendingText?: string, variant?: string, size?: string, className?: string, children: React.ReactNode }} props
  */
-export default function SubmitButton({ children, pendingText = "Please wait…", variant, size = "lg", className = "", ...rest }) {
+export default function SubmitButton({ children, pendingText = "Please wait…", variant, size = "lg", className = "", disabled = false, ...rest }) {
   const { pending } = useFormStatus();
   return (
     <button
       type="submit"
-      disabled={pending}
-      aria-disabled={pending}
+      disabled={pending || disabled}
+      aria-disabled={pending || disabled}
       className={buttonClass({ variant, size, className })}
       {...rest}
     >

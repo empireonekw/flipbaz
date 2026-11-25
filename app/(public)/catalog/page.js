@@ -46,7 +46,7 @@ async function CatalogResults({ searchParams }) {
   return (
     <>
       {!access.isMember && (
-        <Alert tone={access.state === "NONE" ? "info" : "warning"} className="mb-6">
+        <Alert tone={access.state === "GUEST" || access.state === "NONE" ? "info" : "warning"} className="mb-6">
           {access.state === "PENDING" ? (
             <>Your payment is being reviewed. Prices unlock as soon as it&apos;s approved.</>
           ) : access.state === "EXPIRED" ? (
@@ -56,6 +56,14 @@ async function CatalogResults({ searchParams }) {
                 Renew now
               </Link>{" "}
               to see prices and place orders again.
+            </>
+          ) : access.state === "NONE" ? (
+            <>
+              You don&apos;t have a membership yet.{" "}
+              <Link href="/dashboard/membership" className="font-semibold underline">
+                Choose a plan
+              </Link>{" "}
+              to unlock wholesale prices, profit estimates and listing photos.
             </>
           ) : (
             <>
