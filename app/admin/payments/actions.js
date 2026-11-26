@@ -4,6 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/dal";
 import { PaymentError, approvePayment, rejectPayment } from "@/lib/payments";
+import { logError } from "@/lib/security/log";
 
 const reviewSchema = z.object({
   paymentId: z.string().regex(/^[a-f0-9]{24}$/i),
@@ -36,7 +37,7 @@ export async function reviewPaymentAction(_prev, formData) {
     }
   } catch (err) {
     if (err instanceof PaymentError) return { error: err.message };
-    console.error("Payment review failed:", err);
+    logError("payment-review", err);
     return { error: "Something went wrong. Please try again." };
   }
   revalidatePath("/admin/payments");

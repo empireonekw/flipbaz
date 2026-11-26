@@ -15,6 +15,7 @@ const LINKS = [
   { href: "/admin/members", label: "Members" },
   { href: "/admin/sessions", label: "Sessions" },
   { href: "/admin/messages", label: "Messages" },
+  { href: "/admin/security", label: "Security" },
 ];
 
 /** Admin shell. Every admin page also calls requireAdmin() itself. */

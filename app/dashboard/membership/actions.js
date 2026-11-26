@@ -7,6 +7,9 @@ import { PaymentError, submitMembershipPayment } from "@/lib/payments";
 import { UploadError } from "@/lib/storage";
 import { membershipPaymentSchema } from "@/lib/validators/payment";
 import { fieldErrors } from "@/lib/validators/common";
+import { LIMITS } from "@/lib/security/config";
+import { checkLimit } from "@/lib/security/guard";
+import { logError } from "@/lib/security/log";
 
 /**
  * Seller submits proof of payment for a membership plan.
@@ -25,13 +28,16 @@ export async function submitMembershipPaymentAction(_prev, formData) {
   const parsed = membershipPaymentSchema.safeParse({ ...values, screenshot: formData.get("screenshot") });
   if (!parsed.success) return { errors: fieldErrors(parsed.error), values };
 
+  const limited = checkLimit("payment", user.id, LIMITS.paymentSubmit);
+  if (limited) return { ...limited, values };
+
   try {
     await submitMembershipPayment({ userId: user.id, ...parsed.data });
   } catch (err) {
     if (err instanceof PaymentError || err instanceof UploadError) {
       return { message: err.message, values };
     }
-    console.error("Membership payment failed:", err);
+    logError("membership-payment", err);
     return { message: "Something went wrong while saving your payment. Please try again.", values };
   }
 

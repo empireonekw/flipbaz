@@ -5,6 +5,7 @@ import PlanCards from "./PlanCards";
 import { getActivePlans, getPreviewProducts } from "@/lib/catalog";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { getMemberAccess } from "@/lib/membership";
+import { logError } from "@/lib/security/log";
 
 /**
  * Database-backed sections. They render at request time behind <Suspense>,
@@ -29,7 +30,7 @@ export async function CatalogPreview({ limit = 8 }) {
     products = await getPreviewProducts({ isMember: access.isMember }, limit);
   } catch (err) {
     unstable_rethrow(err);
-    console.error("CatalogPreview failed:", err.message);
+    logError("catalogpreview", err);
     return <Unavailable what="the catalog" />;
   }
   if (!products.length) return <Unavailable what="products" />;
@@ -57,7 +58,7 @@ export async function PricingPlans() {
     [plans, user] = await Promise.all([getActivePlans(), getCurrentUser()]);
   } catch (err) {
     unstable_rethrow(err);
-    console.error("PricingPlans failed:", err.message);
+    logError("pricingplans", err);
     return <Unavailable what="our plans" />;
   }
   return <PlanCards plans={plans} signedIn={Boolean(user)} />;

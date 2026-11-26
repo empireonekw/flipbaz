@@ -9,6 +9,9 @@ import { PaymentError, submitOrderPayment } from "@/lib/payments";
 import { UploadError } from "@/lib/storage";
 import { orderPaymentSchema, placeOrderSchema } from "@/lib/validators/order";
 import { fieldErrors } from "@/lib/validators/common";
+import { logError } from "@/lib/security/log";
+import { LIMITS } from "@/lib/security/config";
+import { checkLimit } from "@/lib/security/guard";
 
 /** Errors whose message we can show as-is. */
 const isUserError = (err) => err instanceof OrderError || err instanceof PaymentError || err instanceof UploadError;
@@ -33,6 +36,9 @@ export async function placeOrderAction(_prev, formData) {
   const parsed = placeOrderSchema.safeParse({ ...values, screenshot: formData.get("screenshot") });
   if (!parsed.success) return { errors: fieldErrors(parsed.error), values };
 
+  const limited = checkLimit("order", seller.id, LIMITS.orderPlace);
+  if (limited) return { ...limited, values };
+
   const { lines, method, transactionId, screenshot, ...customer } = parsed.data;
   let result;
   try {
@@ -44,7 +50,7 @@ export async function placeOrderAction(_prev, formData) {
     });
   } catch (err) {
     if (isUserError(err)) return { message: err.message, values };
-    console.error("Place order failed:", err);
+    logError("place-order", err);
     return { message: "Something went wrong while placing the order. Please try again.", values };
   }
 
@@ -68,11 +74,14 @@ export async function submitOrderPaymentAction(_prev, formData) {
   const parsed = orderPaymentSchema.safeParse({ ...values, screenshot: formData.get("screenshot") });
   if (!parsed.success) return { errors: fieldErrors(parsed.error), values };
 
+  const limited = checkLimit("payment", seller.id, LIMITS.paymentSubmit);
+  if (limited) return { ...limited, values };
+
   try {
     await submitOrderPayment({ userId: seller.id, ...parsed.data });
   } catch (err) {
     if (isUserError(err)) return { message: err.message, values };
-    console.error("Order payment failed:", err);
+    logError("order-payment", err);
     return { message: "Something went wrong while saving your payment. Please try again.", values };
   }
   revalidatePath(`/dashboard/orders/${parsed.data.orderId}`);
@@ -87,11 +96,12 @@ export async function submitOrderPaymentAction(_prev, formData) {
 export async function cancelOrderAction(_prev, formData) {
   const seller = await requireSeller("/dashboard/orders");
   const orderId = String(formData.get("orderId") ?? "");
+  if (!/^[a-f0-9]{24}$/i.test(orderId)) return { message: "Order not found." };
   try {
     await cancelSellerOrder(seller.id, orderId);
   } catch (err) {
     if (isUserError(err)) return { message: err.message };
-    console.error("Cancel order failed:", err);
+    logError("cancel-order", err);
     return { message: "Something went wrong. Please try again." };
   }
   revalidatePath(`/dashboard/orders/${orderId}`);

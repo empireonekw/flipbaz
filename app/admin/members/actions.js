@@ -7,6 +7,7 @@ import { endMembership, extendMembership, setAccountActive } from "@/lib/admin/m
 import { extendMembershipSchema } from "@/lib/validators/admin";
 import { formToObject } from "@/lib/validators/common";
 import { formatDate } from "@/lib/format";
+import { GENERIC_ERROR, logError } from "@/lib/security/log";
 
 const isId = (v) => /^[a-f0-9]{24}$/i.test(String(v ?? ""));
 
@@ -26,7 +27,8 @@ export async function extendMembershipAction(_prev, formData) {
     return { ok: `Membership now runs until ${formatDate(endsAt)}.` };
   } catch (err) {
     if (err instanceof AdminError) return { error: err.message };
-    throw err;
+    logError("admin-action", err);
+    return { error: GENERIC_ERROR };
   }
 }
 
@@ -39,7 +41,8 @@ export async function endMembershipAction(_prev, formData) {
     await endMembership({ userId });
   } catch (err) {
     if (err instanceof AdminError) return { error: err.message };
-    throw err;
+    logError("admin-action", err);
+    return { error: GENERIC_ERROR };
   }
   refresh(userId);
   return { ok: "Membership ended." };
@@ -55,7 +58,8 @@ export async function setAccountActiveAction(_prev, formData) {
     await setAccountActive({ userId, active });
   } catch (err) {
     if (err instanceof AdminError) return { error: err.message };
-    throw err;
+    logError("admin-action", err);
+    return { error: GENERIC_ERROR };
   }
   refresh(userId);
   return { ok: active ? "Account enabled." : "Account disabled." };

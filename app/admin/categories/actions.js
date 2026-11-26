@@ -8,6 +8,7 @@ import { deleteCategory, saveCategory } from "@/lib/admin/categories";
 import { UploadError } from "@/lib/storage";
 import { categorySchema } from "@/lib/validators/admin";
 import { fieldErrors, formToObject } from "@/lib/validators/common";
+import { GENERIC_ERROR, logError } from "@/lib/security/log";
 
 function refresh() {
   revalidatePath("/admin/categories");
@@ -33,7 +34,7 @@ export async function saveCategoryAction(_prev, formData) {
     });
   } catch (err) {
     if (err instanceof AdminError || err instanceof UploadError) return { error: err.message, values: raw };
-    console.error("Save category failed:", err);
+    logError("save-category", err);
     return { error: "Something went wrong. Please try again.", values: raw };
   }
   refresh();
@@ -47,7 +48,8 @@ export async function deleteCategoryAction(_prev, formData) {
     await deleteCategory(String(formData.get("id") ?? ""));
   } catch (err) {
     if (err instanceof AdminError) return { error: err.message };
-    throw err;
+    logError("admin-action", err);
+    return { error: GENERIC_ERROR };
   }
   refresh();
   return { ok: "Deleted" };

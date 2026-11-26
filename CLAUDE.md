@@ -93,6 +93,15 @@ deactivate); orders (filter, update status → statusHistory, courier + tracking
   (`lib/catalog.js`), not just in the UI.
 - Convert Mongoose docs to plain objects (`.lean()` + stringify ObjectIds, see `lib/serialize.js`)
   before passing to client components.
+- Abuse controls live in `lib/security/` (config, ip, limiter, guard, log). `server.js` sets the
+  trusted client-IP header (`x-flipbaz-client-ip`, client copies stripped; X-Forwarded-For only
+  with TRUST_PROXY_HOPS). `proxy.js` applies per-IP limits + blocks; every mutating Server Action
+  adds its own `checkLimit`. An IP using more than IP_MAX_ACCOUNTS (default 3) accounts in the
+  window is blocked (persisted in `SecurityBlock`; Admin → Security to unblock).
+- `/admin` answers 404 to non-admins. Sessions carry `ver`; bump `User.sessionVersion` to sign a
+  user out everywhere (done on password change and account disable).
+- Log errors with `logError()` (name/code/message only), return `GENERIC_ERROR` to users; validate
+  every id with `assertId`/ObjectId checks; echo back only allow-listed form fields.
 
 ## Seed (`npm run seed` → `scripts/seed.js`)
 Flip Baz uses the database named in MONGODB_URI (optional MONGODB_DB override; `lib/db.js`).

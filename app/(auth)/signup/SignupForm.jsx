@@ -17,6 +17,7 @@ export default function SignupForm() {
 
   return (
     <form action={formAction} className="space-y-5" noValidate>
+      {state.message && <Alert tone="error">{state.message}</Alert>}
       {Object.keys(errors).length > 0 && (
         <Alert tone="error">Please fix the highlighted fields.</Alert>
       )}

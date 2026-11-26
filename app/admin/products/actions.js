@@ -8,6 +8,7 @@ import { deleteProduct, saveProduct, toggleProductActive } from "@/lib/admin/pro
 import { UploadError } from "@/lib/storage";
 import { productSchema } from "@/lib/validators/admin";
 import { fieldErrors, formToObject } from "@/lib/validators/common";
+import { GENERIC_ERROR, logError } from "@/lib/security/log";
 
 const userError = (err) => err instanceof AdminError || err instanceof UploadError;
 
@@ -48,7 +49,7 @@ export async function saveProductAction(_prev, formData) {
     });
   } catch (err) {
     if (userError(err)) return { error: err.message, values: raw };
-    console.error("Save product failed:", err);
+    logError("save-product", err);
     return { error: "Something went wrong while saving. Please try again.", values: raw };
   }
   refreshCatalog(id);
@@ -63,7 +64,8 @@ export async function toggleProductAction(_prev, formData) {
     await toggleProductActive(id);
   } catch (err) {
     if (err instanceof AdminError) return { error: err.message };
-    throw err;
+    logError("admin-action", err);
+    return { error: GENERIC_ERROR };
   }
   refreshCatalog(id);
   return { ok: "Updated" };
@@ -77,7 +79,8 @@ export async function deleteProductAction(_prev, formData) {
     await deleteProduct(id);
   } catch (err) {
     if (err instanceof AdminError) return { error: err.message };
-    throw err;
+    logError("admin-action", err);
+    return { error: GENERIC_ERROR };
   }
   refreshCatalog();
   redirect("/admin/products?deleted=1");

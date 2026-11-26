@@ -8,10 +8,18 @@
  * Socket.IO powers live support chat and live "Updates". Because it needs a
  * long-running Node process, this app must run on a normal server/VPS (not
  * serverless hosting).
+ *
+ * Security: every request gets the resolved client IP in a trusted header
+ * (CLIENT_IP_HEADER) that proxy.js, Server Actions and route handlers use for
+ * rate limiting and IP blocking. Any copy of that header sent by the client is
+ * removed first. Set TRUST_PROXY_HOPS when running behind Nginx/Cloudflare.
  */
 import { createServer } from "node:http";
 import next from "next";
 import { attachSocketServer } from "./lib/socket-server.js";
+import { CLIENT_IP_HEADER } from "./lib/security/config.js";
+import { resolveClientIp } from "./lib/security/ip.js";
+import { initBlockPersistence } from "./lib/security/persist.js";
 
 const dev = !process.argv.includes("--production") && process.env.NODE_ENV !== "production";
 const portArg = process.argv.find((a) => a.startsWith("--port="))?.split("=")[1];
@@ -23,10 +31,16 @@ const app = next({ dev, hostname, port, httpServer });
 const handle = app.getRequestHandler();
 
 await app.prepare();
+await initBlockPersistence();
 
-// Next handles every HTTP request; Socket.IO (attached below) wraps this
-// listener and takes only /socket.io/ traffic for itself.
-httpServer.on("request", (req, res) => handle(req, res));
+httpServer.on("request", (req, res) => {
+  // Never trust a client-supplied copy of our internal header.
+  delete req.headers[CLIENT_IP_HEADER];
+  const ip = resolveClientIp(req);
+  if (ip) req.headers[CLIENT_IP_HEADER] = ip;
+  handle(req, res);
+});
+// Socket.IO wraps the listener above and takes only /socket.io/ traffic.
 attachSocketServer(httpServer);
 
 httpServer.listen(port, hostname, () => {

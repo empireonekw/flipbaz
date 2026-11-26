@@ -29,6 +29,9 @@ export async function GET(_request, { params }) {
     headers: {
       "Content-Type": file.contentType,
       "X-Content-Type-Options": "nosniff",
+      // Uploads are images only; never let one run script or be framed.
+      "Content-Security-Policy": "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; sandbox",
+      "Cross-Origin-Resource-Policy": "same-origin",
       "Cache-Control": PRIVATE_FOLDERS.includes(folder)
         ? "private, no-store"
         : "public, max-age=31536000, immutable",

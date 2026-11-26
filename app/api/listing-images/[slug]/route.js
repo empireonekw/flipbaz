@@ -2,6 +2,8 @@ import { zipSync } from "fflate";
 import { connectDB } from "@/lib/db";
 import { Product } from "@/lib/models";
 import { getMemberAccess } from "@/lib/membership";
+import { LIMITS } from "@/lib/security/config";
+import { hit } from "@/lib/security/limiter";
 
 /** Max total zip size we'll build in memory (25 MB). */
 const MAX_TOTAL_BYTES = 25 * 1024 * 1024;
@@ -33,6 +35,9 @@ async function fetchImage(url, origin) {
  */
 export async function GET(request, { params }) {
   const { slug } = await params;
+  if (typeof slug !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || slug.length > 120) {
+    return Response.json({ error: "Product not found." }, { status: 404 });
+  }
   const access = await getMemberAccess();
   if (!access.user) {
     return Response.json({ error: "Please log in." }, { status: 401 });
@@ -41,8 +46,16 @@ export async function GET(request, { params }) {
     return Response.json({ error: "An active membership is required to download listing images." }, { status: 403 });
   }
 
+  const limit = hit(`zip:${access.user.id}`, LIMITS.listingDownload);
+  if (!limit.ok) {
+    return Response.json(
+      { error: "Too many downloads. Please wait a few minutes." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfterSec) } }
+    );
+  }
+
   await connectDB();
-  const product = await Product.findOne({ slug: String(slug), active: true }).select("slug images").lean();
+  const product = await Product.findOne({ slug, active: true }).select("slug images").lean();
   if (!product) return Response.json({ error: "Product not found." }, { status: 404 });
 
   const origin = new URL(request.url).origin;

@@ -24,6 +24,7 @@ export function ProfileForm({ user }) {
         Your details
       </h2>
       {state.ok && <Alert tone="success">{state.ok}</Alert>}
+      {state.message && <Alert tone="error">{state.message}</Alert>}
       <Field label="Email (used to log in)" name="emailDisplay" value={user.email} readOnly disabled hint="Contact support to change your email." />
       <Field label="Full name" name="name" autoComplete="name" required defaultValue={v.name} error={errors.name} />
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -64,6 +65,7 @@ export function PasswordForm() {
         Change password
       </h2>
       {state.ok && <Alert tone="success">{state.ok}</Alert>}
+      {state.message && <Alert tone="error">{state.message}</Alert>}
       <Field label="Current password" name="currentPassword" type="password" autoComplete="current-password" required error={errors.currentPassword} />
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Field label="New password" name="newPassword" type="password" autoComplete="new-password" required hint="At least 8 characters" error={errors.newPassword} />

@@ -7,6 +7,7 @@ import { AdminError } from "@/lib/admin/common";
 import { deletePlan, savePlan } from "@/lib/admin/plans";
 import { planSchema } from "@/lib/validators/admin";
 import { fieldErrors, formToObject } from "@/lib/validators/common";
+import { GENERIC_ERROR, logError } from "@/lib/security/log";
 
 function refresh() {
   revalidatePath("/admin/plans");
@@ -28,7 +29,7 @@ export async function savePlanAction(_prev, formData) {
     await savePlan({ id: raw.id || undefined, data: parsed.data });
   } catch (err) {
     if (err instanceof AdminError) return { error: err.message, values: raw };
-    console.error("Save plan failed:", err);
+    logError("save-plan", err);
     return { error: "Something went wrong. Please try again.", values: raw };
   }
   refresh();
@@ -42,7 +43,8 @@ export async function deletePlanAction(_prev, formData) {
     await deletePlan(String(formData.get("id") ?? ""));
   } catch (err) {
     if (err instanceof AdminError) return { error: err.message };
-    throw err;
+    logError("admin-action", err);
+    return { error: GENERIC_ERROR };
   }
   refresh();
   return { ok: "Deleted" };
