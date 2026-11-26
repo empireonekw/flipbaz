@@ -6,7 +6,13 @@ import DashboardNav, { NavList } from "@/components/dashboard/DashboardNav";
 
 const LINKS = [
   { href: "/admin", label: "Overview", exact: true },
+  { href: "/admin/orders", label: "Orders" },
   { href: "/admin/payments", label: "Payments" },
+  { href: "/admin/products", label: "Products" },
+  { href: "/admin/categories", label: "Categories" },
+  { href: "/admin/plans", label: "Plans" },
+  { href: "/admin/members", label: "Members" },
+  { href: "/admin/messages", label: "Messages" },
 ];
 
 /** Admin shell. Every admin page also calls requireAdmin() itself. */

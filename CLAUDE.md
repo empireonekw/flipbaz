@@ -109,7 +109,8 @@ own collections. NEVER drop the whole database.
 ## How we work
 Build in phases: (1) models + db + seed → (2) auth → (3) public pages + catalog gating →
 (4) membership/payments → (5) seller dashboard/orders → (6) admin → (7) polish.
-After each phase: `npm run build` and `npm run lint`, fix all errors, `git commit`, then STOP
+After each phase: `npm run build` and `npm run lint`, fix all errors, then STOP (do NOT
+commit: the user makes all git commits themselves)
 and wait for the user to say "continue".
 Final step: test full flow (sign up → choose plan → submit payment → admin approves → seller
 sees prices → places order → admin moves to SHIPPED with tracking → seller sees it) and report

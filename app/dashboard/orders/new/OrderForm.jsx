@@ -1,6 +1,7 @@
 "use client";
 
 import { startTransition, useActionState, useId, useMemo, useState } from "react";
+import { useHydrated } from "@/components/ui/useHydrated";
 import Image from "next/image";
 import { placeOrderAction } from "../actions";
 import Field, { inputClass } from "@/components/ui/Field";
@@ -31,6 +32,7 @@ const newLine = (product) => ({
  */
 export default function OrderForm({ products, accounts, initialProductSlug }) {
   const [state, formAction, isPending] = useActionState(placeOrderAction, {});
+  const hydrated = useHydrated();
   const errors = state.errors ?? {};
   const values = state.values ?? {};
   const byId = useMemo(() => new Map(products.map((p) => [p._id, p])), [products]);
@@ -73,7 +75,7 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8" noValidate>
+    <form onSubmit={onSubmit} method="post" className="space-y-8" noValidate>
       {state.message && <Alert tone="error">{state.message}</Alert>}
       {Object.keys(errors).length > 0 && !state.message && <Alert tone="error">Please fix the highlighted fields.</Alert>}
       <input type="hidden" name="lines" value={payload} />
@@ -261,8 +263,8 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
         <p className="text-sm text-muted">We&apos;ll confirm your payment, then start production.</p>
         <button
           type="submit"
-          disabled={isPending || priced.length === 0 || !accounts.length}
-          aria-disabled={isPending || priced.length === 0 || !accounts.length}
+          disabled={!hydrated || isPending || priced.length === 0 || !accounts.length}
+          aria-disabled={!hydrated || isPending || priced.length === 0 || !accounts.length}
           className={buttonClass({ variant: "accent", size: "lg" })}
         >
           {isPending ? "Placing order…" : `Place order · ${formatPKR(totals.total)}`}
