@@ -30,6 +30,11 @@ original. Never copy their text or assets.
   for Cloudinary/S3 later.
 - Light/dark toggle, fully responsive, mobile-first (most users are on phones).
 - Currency PKR, formatted `Rs 1,500` (`lib/format.js`).
+- Real-time: Socket.IO on a custom server (`server.js` + `lib/socket-server.js`). `npm run dev` /
+  `npm start` run it (plain `next dev` works but without live chat). Needs a long-running Node
+  host (no serverless). Chat data: `lib/chat.js`; live pushes from app code: `lib/realtime.js`.
+- Seller app: sidebar shell in `app/dashboard/layout.js` (`components/dashboard/shell/`); Home
+  data in `lib/seller.js`; Updates feed = `Notification` model via `lib/notifications.js`.
 
 ## Models (timestamps: true on all)
 - User: name, email (unique, indexed), phone, whatsapp, city, passwordHash, role

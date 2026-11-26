@@ -2,14 +2,21 @@ import { Suspense } from "react";
 import { PasswordForm, ProfileForm } from "./ProfileForms";
 import { DashboardBanner } from "@/components/dashboard/MembershipBanner";
 import { requireSeller } from "@/lib/auth/dal";
+import { connectDB } from "@/lib/db";
+import { User } from "@/lib/models";
 
 export const metadata = { title: "Profile" };
 
 async function Profile() {
-  const user = await requireSeller("/dashboard/profile");
+  const seller = await requireSeller("/dashboard/profile");
+  await connectDB();
+  const extra = await User.findById(seller.id).select("storeName sellingPlatforms").lean();
+  const user = { ...seller, storeName: extra?.storeName ?? "", sellingPlatforms: extra?.sellingPlatforms ?? [] };
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-      <ProfileForm user={{ name: user.name, email: user.email, phone: user.phone, whatsapp: user.whatsapp, city: user.city }} />
+      <ProfileForm
+        user={{ name: user.name, email: user.email, phone: user.phone, whatsapp: user.whatsapp, city: user.city, storeName: user.storeName, sellingPlatforms: user.sellingPlatforms }}
+      />
       <PasswordForm />
     </div>
   );

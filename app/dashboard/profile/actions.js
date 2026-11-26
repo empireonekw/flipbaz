@@ -17,20 +17,21 @@ import { fieldErrors, formToObject } from "@/lib/validators/common";
 export async function updateProfileAction(_prev, formData) {
   const seller = await requireSeller("/dashboard/profile");
   const raw = formToObject(formData);
-  const parsed = profileSchema.safeParse(raw);
-  if (!parsed.success) return { errors: fieldErrors(parsed.error), values: raw };
+  const platforms = formData.getAll("sellingPlatforms").map(String);
+  const parsed = profileSchema.safeParse({ ...raw, sellingPlatforms: platforms });
+  if (!parsed.success) return { errors: fieldErrors(parsed.error), values: { ...raw, sellingPlatforms: platforms } };
 
   await connectDB();
-  const { name, phone, whatsapp, city } = parsed.data;
+  const { name, phone, whatsapp, city, storeName, sellingPlatforms } = parsed.data;
   const user = await User.findByIdAndUpdate(
     seller.id,
-    { $set: { name, phone, whatsapp: whatsapp || phone, city } },
+    { $set: { name, phone, whatsapp: whatsapp || phone, city, storeName, sellingPlatforms } },
     { returnDocument: "after" }
   ).lean();
   // Keep the name in the session token in sync.
   if (user) await createSession(user);
   revalidatePath("/dashboard", "layout");
-  return { ok: "Profile saved.", values: { name, phone, whatsapp: whatsapp || phone, city } };
+  return { ok: "Profile saved.", values: { name, phone, whatsapp: whatsapp || phone, city, storeName, sellingPlatforms } };
 }
 
 /**

@@ -8,13 +8,13 @@ import { inputClass } from "@/components/ui/Field";
  * next/form turns submits into client-side navigations, and the selects
  * submit as soon as they change.
  *
- * @param {{ categories: {slug: string, name: string}[], sorts: {value: string, label: string}[], current: {q?: string, category?: string, sort?: string} }} props
+ * @param {{ basePath?: string, categories: {slug: string, name: string}[], sorts: {value: string, label: string}[], current: {q?: string, category?: string, sort?: string} }} props
  */
-export default function CatalogFilters({ categories, sorts, current }) {
+export default function CatalogFilters({ basePath = "/catalog", categories, sorts, current }) {
   const submitOnChange = (e) => e.currentTarget.form?.requestSubmit();
 
   return (
-    <Form action="/catalog" className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_auto_auto]" role="search">
+    <Form action={basePath} className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_auto_auto]" role="search">
       <div>
         <label htmlFor="catalog-q" className="sr-only">
           Search products

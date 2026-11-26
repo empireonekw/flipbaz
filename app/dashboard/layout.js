@@ -1,48 +1,60 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import Logo from "@/components/ui/Logo";
-import ThemeToggle from "@/components/layout/ThemeToggle";
-import LogoutButton from "@/components/auth/LogoutButton";
-import DashboardNav, { NavList } from "@/components/dashboard/DashboardNav";
+import { LogoMark } from "@/components/ui/Logo";
+import SidebarNav, { SidebarNavFallback } from "@/components/dashboard/shell/SidebarNav";
+import SidebarUser from "@/components/dashboard/shell/SidebarUser";
+import MobileShell from "@/components/dashboard/shell/MobileShell";
+import ChatWidgetLoader from "@/components/chat/ChatWidgetLoader";
+import LiveRefresh from "@/components/dashboard/shell/LiveRefresh";
 
-const LINKS = [
-  { href: "/dashboard", label: "Overview", exact: true },
-  { href: "/dashboard/orders/new", label: "New order", exact: true },
-  { href: "/dashboard/orders", label: "Orders", exact: false, notPrefix: "/dashboard/orders/new" },
-  { href: "/dashboard/membership", label: "Membership" },
-  { href: "/dashboard/profile", label: "Profile" },
-];
+const UserFallback = () => <div className="h-24 animate-pulse rounded-xl bg-white/5" aria-hidden="true" />;
 
 /**
- * Seller area shell (static). Layouts aren't re-rendered when moving between
- * sibling pages, so anything that must stay fresh, like the membership
- * banner, is rendered by each page via <DashboardBanner />.
+ * Seller app shell: dark sidebar on desktop, top bar + drawer on phones, and
+ * the support chat bubble. Static parts prerender; anything that reads the
+ * session streams in behind <Suspense>. Pages render their own banner via
+ * <DashboardBanner /> because layouts don't re-render between sibling pages.
  */
 export default function DashboardLayout({ children }) {
   return (
-    <>
-      <header className="border-b border-line bg-surface">
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
-          <Logo href="/dashboard" />
-          <div className="flex items-center gap-1 sm:gap-2">
-            <Link href="/catalog" className="hidden rounded-lg px-3 py-2 text-sm font-medium text-muted hover:bg-surface-2 hover:text-ink sm:block">
-              Browse catalog
-            </Link>
-            <ThemeToggle />
-            <LogoutButton />
-          </div>
-        </div>
-      </header>
-      <div className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 sm:px-6">
-        <div className="pt-4">
-          <Suspense fallback={<NavList links={LINKS} />}>
-            <DashboardNav links={LINKS} />
+    <div className="min-h-dvh bg-page lg:grid lg:grid-cols-[17rem_1fr]">
+      <aside className="sticky top-0 hidden h-dvh flex-col bg-[#0f1714] px-4 pb-4 pt-5 text-white lg:flex">
+        <Link href="/dashboard" className="mb-6 flex items-center gap-2 px-2 text-lg font-extrabold tracking-tight">
+          <LogoMark className="h-8 w-8" />
+          <span>
+            flip<span className="text-brand-300">baz</span>
+          </span>
+          <span className="ml-1 rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/60">Seller</span>
+        </Link>
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+          <Suspense fallback={<SidebarNavFallback />}>
+            <SidebarNav />
           </Suspense>
         </div>
-        <main id="main" className="pt-6">
+        <div className="mt-3 border-t border-white/10 pt-3">
+          <Suspense fallback={<UserFallback />}>
+            <SidebarUser />
+          </Suspense>
+        </div>
+      </aside>
+
+      <div className="flex min-w-0 flex-col">
+        <MobileShell
+          userSlot={
+            <Suspense fallback={<UserFallback />}>
+              <SidebarUser />
+            </Suspense>
+          }
+        />
+        <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-10 lg:pt-10">
           {children}
         </main>
       </div>
-    </>
+
+      <Suspense fallback={null}>
+        <ChatWidgetLoader />
+      </Suspense>
+      <LiveRefresh />
+    </div>
   );
 }

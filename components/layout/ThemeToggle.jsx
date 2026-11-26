@@ -14,8 +14,9 @@ const getServerSnapshot = () => false;
 /**
  * Light/dark switch. Saves the choice in localStorage ("fb-theme"); the inline
  * script in the root layout applies it before first paint.
+ * @param {{ className?: string }} props  replaces the default button styling when given
  */
-export default function ThemeToggle({ className = "" }) {
+export default function ThemeToggle({ className }) {
   const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   function toggle() {
@@ -32,7 +33,7 @@ export default function ThemeToggle({ className = "" }) {
       onClick={toggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       aria-pressed={isDark}
-      className={`inline-flex h-10 w-10 items-center justify-center rounded-xl text-ink hover:bg-surface-2 ${className}`}
+      className={className ?? "inline-flex h-10 w-10 items-center justify-center rounded-xl text-ink hover:bg-surface-2"}
     >
       {isDark ? (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
