@@ -10,7 +10,8 @@
  *   MONGODB_URI, MONGODB_DB (optional), ADMIN_EMAIL, ADMIN_PASSWORD,
  *   DEMO_SELLER_EMAIL, DEMO_SELLER_PASSWORD (optional demo seller login)
  *
- * Also writes SVG placeholder images to /public/seed.
+ * Product pictures: demo photos from /public/seed/photos when present (see
+ * seed-photos.js), otherwise SVG placeholders written to /public/seed.
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -19,6 +20,7 @@ import { fileURLToPath } from "node:url";
 import mongoose from "mongoose";
 import { connectDB, disconnectDB, DB_NAME } from "../lib/db.js";
 import { findForeignCollections } from "./seed-guard.js";
+import { loadSeedPhotos } from "./seed-photos.js";
 import { hashPassword } from "../lib/auth/password.js";
 import { slugify } from "../lib/format.js";
 import { computeOrderTotals } from "../lib/pricing.js";
@@ -89,9 +91,14 @@ async function writeImages() {
     categoryImages[c.slug] = `/seed/${file}`;
   }
 
+  const photos = await loadSeedPhotos();
   const productImages = {};
   for (const p of products) {
     const slug = slugify(p.title);
+    if (photos[slug]?.length) {
+      productImages[slug] = photos[slug];
+      continue;
+    }
     const cat = categories.find((c) => c.slug === p.category);
     const urls = [];
     const variants = [0, 28, -28];
@@ -111,6 +118,11 @@ async function writeImages() {
     }
     productImages[slug] = urls;
   }
+  // Categories show the first photo of their first product that has one.
+  for (const c of categories) {
+    const first = products.find((p) => p.category === c.slug && photos[slugify(p.title)]?.length);
+    if (first) categoryImages[c.slug] = photos[slugify(first.title)][0];
+  }
   return { categoryImages, productImages };
 }
 
@@ -120,7 +132,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log("• Writing placeholder images to /public/seed …");
+  console.log("• Preparing product images (demo photos, else SVG placeholders) …");
   const { categoryImages, productImages } = await writeImages();
 
   requireEnv("MONGODB_URI");
