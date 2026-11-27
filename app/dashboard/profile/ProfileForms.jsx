@@ -20,7 +20,7 @@ export function ProfileForm({ user }) {
 
   return (
     <form action={formAction} className={`${card} space-y-5`} noValidate aria-labelledby="profile-heading">
-      <h2 id="profile-heading" className="text-lg font-bold">
+      <h2 id="profile-heading" className="text-base font-semibold">
         Your details
       </h2>
       {state.ok && <Alert tone="success">{state.ok}</Alert>}
@@ -61,7 +61,7 @@ export function PasswordForm() {
   const errors = state.errors ?? {};
   return (
     <form action={formAction} className={`${card} space-y-5`} noValidate aria-labelledby="password-heading">
-      <h2 id="password-heading" className="text-lg font-bold">
+      <h2 id="password-heading" className="text-base font-semibold">
         Change password
       </h2>
       {state.ok && <Alert tone="success">{state.ok}</Alert>}

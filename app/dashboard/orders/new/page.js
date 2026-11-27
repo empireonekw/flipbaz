@@ -20,7 +20,7 @@ async function NewOrder({ searchParams }) {
   if (!access.isMember) {
     return (
       <div className="rounded-[var(--radius-card)] border border-line bg-surface p-6 text-center">
-        <h2 className="text-lg font-bold">Ordering needs an active membership</h2>
+        <h2 className="text-base font-semibold">Ordering needs an active membership</h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted">
           {access.state === "PENDING"
             ? "Your membership payment is being reviewed. You can place orders as soon as it's approved."
@@ -48,7 +48,7 @@ export default function NewOrderPage({ searchParams }) {
   return (
     <>
       <DashboardBanner />
-      <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Place an order</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">Place an order</h1>
       <p className="mt-1 mb-6 text-muted">Got a sale? Tell us what to make and where to send it.</p>
       <Suspense fallback={<div className="h-[40rem] animate-pulse rounded-[var(--radius-card)] bg-surface-2" />}>
         <NewOrder searchParams={searchParams} />

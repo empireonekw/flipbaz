@@ -86,7 +86,7 @@ async function OrdersList({ searchParams }) {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-mono text-sm font-bold">{o.orderNumber}</span>
+                      <span className="font-mono text-sm font-semibold">{o.orderNumber}</span>
                       <OrderStatusBadge status={o.status} />
                     </div>
                     <p className="mt-1 truncate text-sm">
@@ -99,7 +99,7 @@ async function OrdersList({ searchParams }) {
                       {o.trackingNumber ? ` · ${o.courier ?? "Courier"} ${o.trackingNumber}` : ""}
                     </p>
                   </div>
-                  <p className="shrink-0 text-right font-bold">{formatPKR(o.total)}</p>
+                  <p className="shrink-0 text-right font-semibold">{formatPKR(o.total)}</p>
                 </Link>
               </li>
             );
@@ -134,7 +134,7 @@ export default function OrdersPage({ searchParams }) {
   return (
     <>
       <DashboardBanner />
-      <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">My orders</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">My orders</h1>
       <p className="mt-1 mb-6 text-muted">Every order you&apos;ve sent us, with live status and tracking.</p>
       <Suspense fallback={<div className="h-96 animate-pulse rounded-[var(--radius-card)] bg-surface-2" />}>
         <OrdersList searchParams={searchParams} />

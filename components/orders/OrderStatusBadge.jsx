@@ -16,7 +16,7 @@ const styles = {
  */
 export default function OrderStatusBadge({ status, className = "" }) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${styles[status] ?? styles.CANCELLED} ${className}`}>
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${styles[status] ?? styles.CANCELLED} ${className}`}>
       {ORDER_STATUS_LABELS[status] ?? status}
     </span>
   );

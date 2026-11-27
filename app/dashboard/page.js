@@ -13,7 +13,7 @@ import { formatDate, formatPKR } from "@/lib/format";
 
 export const metadata = { title: "Home" };
 
-const card = "rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-sm sm:p-6";
+const card = "rounded-2xl border border-line bg-surface p-5 shadow-xs";
 
 /** "Good morning" etc. in Pakistan time. */
 function greeting(now = new Date()) {
@@ -47,12 +47,12 @@ const PAY_BADGE = {
 
 /** Header row: title, greeting and quick actions. */
 function Header({ firstName, access }) {
-  const chip = "inline-flex h-10 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm font-semibold hover:bg-surface-2";
+  const chip = "inline-flex h-9 items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 text-[13px] font-medium hover:bg-surface-2";
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
       <div>
-        <h1 className="text-3xl font-extrabold tracking-tight">Home</h1>
-        <p className="mt-1 text-muted">
+        <h1 className="text-2xl font-semibold tracking-tight">Home</h1>
+        <p className="mt-1 text-sm text-muted">
           {greeting()}, {firstName}.
         </p>
       </div>
@@ -73,7 +73,7 @@ function Header({ firstName, access }) {
         </a>
         <Link
           href="/dashboard/catalog"
-          className="inline-flex h-10 items-center gap-2 rounded-full bg-brand-700 px-4 text-sm font-semibold text-white hover:bg-brand-800 dark:bg-brand-500 dark:text-brand-950 dark:hover:bg-brand-400"
+          className="inline-flex h-9 items-center gap-1.5 rounded-full bg-brand-700 px-3.5 text-[13px] font-medium text-white hover:bg-brand-800 dark:bg-brand-500 dark:text-brand-950 dark:hover:bg-brand-400"
         >
           <ShellIcon name="bag" className="h-4 w-4" />
           Browse catalog
@@ -95,7 +95,7 @@ function Checklist({ checklist }) {
       </p>
       {current ? (
         <>
-          <h2 className="mt-2 text-lg font-bold">{current.title}</h2>
+          <h2 className="mt-2 text-base font-semibold">{current.title}</h2>
           <p className="mt-1 text-sm text-muted">{current.body}</p>
           <div className="mt-4 flex flex-wrap items-center gap-2">
             {current.manual && <StepToggle step={current.id} />}
@@ -127,7 +127,7 @@ function Checklist({ checklist }) {
         </>
       ) : (
         <>
-          <h2 className="mt-2 text-lg font-bold">You&apos;re fully launched</h2>
+          <h2 className="mt-2 text-base font-semibold">You&apos;re fully launched</h2>
           <p className="mt-1 text-sm text-muted">Every step done. Keep listing, keep selling.</p>
         </>
       )}
@@ -151,10 +151,10 @@ function Updates({ items, unread }) {
   return (
     <section aria-labelledby="updates-heading" className={card}>
       <div className="flex items-center justify-between">
-        <h2 id="updates-heading" className="font-bold">
-          Updates {unread > 0 && <span className="ml-1 rounded-full bg-accent-500 px-2 py-0.5 text-xs font-bold text-white">{unread} new</span>}
+        <h2 id="updates-heading" className="font-semibold">
+          Updates {unread > 0 && <span className="ml-1 rounded-full bg-accent-500 px-2 py-0.5 text-xs font-semibold text-white">{unread} new</span>}
         </h2>
-        <Link href="/dashboard/updates" className="text-sm font-semibold text-brand-700 hover:underline dark:text-brand-400">
+        <Link href="/dashboard/updates" className="text-sm font-medium text-brand-700 hover:underline dark:text-brand-400">
           See all
         </Link>
       </div>
@@ -174,7 +174,7 @@ function Updates({ items, unread }) {
                 </div>
                 {n.body && <p className="line-clamp-2 text-sm text-muted">{n.body}</p>}
                 {n.href && (
-                  <Link href={n.href} className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:underline dark:text-brand-400">
+                  <Link href={n.href} className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-brand-700 hover:underline dark:text-brand-400">
                     Open <ShellIcon name="arrow" className="h-3.5 w-3.5" />
                   </Link>
                 )}
@@ -198,7 +198,7 @@ function OrderFlow({ flow, balance }) {
   return (
     <section aria-labelledby="flow-heading" className={card}>
       <div className="flex items-center justify-between">
-        <h2 id="flow-heading" className="font-bold">
+        <h2 id="flow-heading" className="font-semibold">
           Order flow
         </h2>
         <span className="text-sm text-muted">
@@ -208,10 +208,10 @@ function OrderFlow({ flow, balance }) {
       <ol className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {tiles.map((t, i) => (
           <li key={t.label} className="relative">
-            <Link href={t.href} className="block h-full rounded-2xl bg-surface-2/70 p-4 hover:bg-surface-2">
-              <ShellIcon name={t.icon} className={`h-5 w-5 ${t.n ? "text-brand-700 dark:text-brand-400" : "text-muted"}`} />
-              <p className={`mt-3 text-3xl font-extrabold tabular-nums ${t.n ? "" : "text-muted"}`}>{t.n}</p>
-              <p className="mt-1 text-sm font-semibold">{t.label}</p>
+            <Link href={t.href} className="block h-full rounded-xl bg-surface-2/70 p-4 hover:bg-surface-2">
+              <ShellIcon name={t.icon} className={`h-[18px] w-[18px] ${t.n ? "text-brand-700 dark:text-brand-400" : "text-muted"}`} />
+              <p className={`mt-2.5 text-2xl font-semibold tabular-nums ${t.n ? "" : "text-muted"}`}>{t.n}</p>
+              <p className="mt-0.5 text-sm font-medium">{t.label}</p>
               <p className="text-xs text-muted">{t.sub}</p>
             </Link>
             {i < tiles.length - 1 && (
@@ -220,12 +220,12 @@ function OrderFlow({ flow, balance }) {
           </li>
         ))}
       </ol>
-      <div className="mt-4 flex items-center justify-between rounded-2xl border border-line px-4 py-3">
+      <div className="mt-4 flex items-center justify-between rounded-xl border border-line px-4 py-2.5">
         <span className="flex items-center gap-2 text-sm">
           <ShellIcon name="wallet" className="h-4 w-4 text-muted" />
           Account balance
         </span>
-        <span className="font-bold">{formatPKR(balance)}</span>
+        <span className="font-semibold">{formatPKR(balance)}</span>
       </div>
     </section>
   );
@@ -236,10 +236,10 @@ function RecentOrders({ orders }) {
   return (
     <section aria-labelledby="recent-heading" className={`${card} p-0! overflow-hidden`}>
       <div className="flex items-center justify-between px-5 pt-5 sm:px-6">
-        <h2 id="recent-heading" className="font-bold">
+        <h2 id="recent-heading" className="font-semibold">
           Recent orders
         </h2>
-        <Link href="/dashboard/orders" className="text-sm font-semibold text-brand-700 hover:underline dark:text-brand-400">
+        <Link href="/dashboard/orders" className="text-sm font-medium text-brand-700 hover:underline dark:text-brand-400">
           View all
         </Link>
       </div>
@@ -268,7 +268,7 @@ function RecentOrders({ orders }) {
               <tbody className="divide-y divide-line">
                 {orders.map((o) => (
                   <tr key={o._id}>
-                    <td className="px-6 py-3.5 font-mono font-bold">{o.orderNumber}</td>
+                    <td className="px-6 py-3.5 font-mono font-semibold">{o.orderNumber}</td>
                     <td className="max-w-56 truncate px-3 py-3.5">
                       {o.product}
                       {o.more ? ` +${o.more}` : ""}
@@ -277,13 +277,13 @@ function RecentOrders({ orders }) {
                     <td className="px-3 py-3.5">
                       <span className="flex flex-wrap gap-1.5">
                         <OrderStatusBadge status={o.status} />
-                        <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${PAY_BADGE[o.payment][1]}`}>{PAY_BADGE[o.payment][0]}</span>
+                        <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${PAY_BADGE[o.payment][1]}`}>{PAY_BADGE[o.payment][0]}</span>
                       </span>
                       <span className="mt-1 block text-xs text-muted">{o.next}</span>
                     </td>
                     <td className="px-3 py-3.5 text-right font-semibold">{formatPKR(o.total)}</td>
                     <td className="px-6 py-3.5 text-right">
-                      <Link href={`/dashboard/orders/${o._id}`} className="font-semibold text-brand-700 hover:underline dark:text-brand-400">
+                      <Link href={`/dashboard/orders/${o._id}`} className="font-medium text-brand-700 hover:underline dark:text-brand-400">
                         Open<span className="sr-only"> order {o.orderNumber}</span>
                       </Link>
                     </td>
@@ -297,13 +297,13 @@ function RecentOrders({ orders }) {
               <li key={o._id}>
                 <Link href={`/dashboard/orders/${o._id}`} className="block px-5 py-3.5">
                   <span className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-sm font-bold">{o.orderNumber}</span>
+                    <span className="font-mono text-sm font-semibold">{o.orderNumber}</span>
                     <span className="text-sm font-semibold">{formatPKR(o.total)}</span>
                   </span>
                   <span className="mt-0.5 block truncate text-sm text-muted">{o.product}</span>
                   <span className="mt-1.5 flex flex-wrap gap-1.5">
                     <OrderStatusBadge status={o.status} />
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${PAY_BADGE[o.payment][1]}`}>{PAY_BADGE[o.payment][0]}</span>
+                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${PAY_BADGE[o.payment][1]}`}>{PAY_BADGE[o.payment][0]}</span>
                   </span>
                   <span className="mt-1 block text-xs text-muted">{o.next}</span>
                 </Link>

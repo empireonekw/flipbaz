@@ -26,7 +26,7 @@ export default function ProfilePage() {
   return (
     <>
       <DashboardBanner />
-      <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Profile</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">Profile</h1>
       <p className="mt-1 mb-6 text-muted">How we reach you about your orders.</p>
       <Suspense fallback={<div className="h-80 animate-pulse rounded-[var(--radius-card)] bg-surface-2" />}>
         <Profile />

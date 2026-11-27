@@ -43,7 +43,7 @@ export default function ChatThread({ messages, mine, typing, empty, onLoadOlder,
                   own ? "rounded-br-md bg-brand-700 text-white dark:bg-brand-600" : "rounded-bl-md border border-line bg-surface text-ink"
                 }`}
               >
-                {!own && <p className="mb-0.5 text-[11px] font-bold opacity-70">{m.senderName}</p>}
+                {!own && <p className="mb-0.5 text-[11px] font-semibold opacity-70">{m.senderName}</p>}
                 <p className="whitespace-pre-wrap break-words">{m.body}</p>
                 <p className={`mt-0.5 text-right text-[10px] ${own ? "text-white/70" : "text-muted"}`}>{timeFmt.format(new Date(m.createdAt))}</p>
               </div>

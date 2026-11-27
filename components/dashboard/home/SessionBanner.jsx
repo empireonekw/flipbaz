@@ -56,7 +56,7 @@ export default function SessionBanner({ session, isMember, whenLabel }) {
             {live ? "Live now" : "Upcoming live session"}
             {live && <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" aria-hidden="true" />}
           </p>
-          <h2 className="mt-1 text-lg font-bold leading-snug sm:text-xl">{session.title}</h2>
+          <h2 className="mt-1 text-base font-semibold leading-snug">{session.title}</h2>
           <p className="mt-1 text-sm text-white/70">
             {whenLabel}
             {session.host ? ` · with ${session.host}` : ""}
@@ -67,7 +67,7 @@ export default function SessionBanner({ session, isMember, whenLabel }) {
             <div className="flex gap-2" role="timer" aria-live="off" aria-label="Time until it starts">
               {parts.map(([v, label]) => (
                 <span key={label} className="flex w-14 flex-col items-center rounded-xl bg-white/10 py-2">
-                  <span className="text-2xl font-extrabold tabular-nums">{now == null ? "--" : pad(v)}</span>
+                  <span className="text-2xl font-semibold tabular-nums">{now == null ? "--" : pad(v)}</span>
                   <span className="text-[11px] text-white/60">{label}</span>
                 </span>
               ))}
@@ -78,7 +78,7 @@ export default function SessionBanner({ session, isMember, whenLabel }) {
               href={`/dashboard/sessions/${session._id}/join`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 items-center rounded-xl bg-accent-500 px-5 text-sm font-bold text-white hover:bg-accent-600"
+              className="inline-flex h-11 items-center rounded-xl bg-accent-500 px-5 text-sm font-semibold text-white hover:bg-accent-600"
             >
               Join session
             </a>

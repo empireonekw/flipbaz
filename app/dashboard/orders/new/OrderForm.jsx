@@ -82,7 +82,7 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
 
       {/* 1. Items */}
       <section aria-labelledby={`${idBase}-items`} className="rounded-[var(--radius-card)] border border-line bg-surface p-5 sm:p-6">
-        <h2 id={`${idBase}-items`} className="text-lg font-bold">
+        <h2 id={`${idBase}-items`} className="text-base font-semibold">
           1. What did your customer order?
         </h2>
         {errors.lines && <p className="mt-2 text-sm font-medium text-red-600 dark:text-red-400">{errors.lines}</p>}
@@ -163,7 +163,7 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
                     </div>
                     <div className="flex flex-col justify-end">
                       <p className="text-xs text-muted">Line total</p>
-                      <p className="text-lg font-bold">{formatPKR(p.costPrice * line.qty)}</p>
+                      <p className="text-base font-semibold">{formatPKR(p.costPrice * line.qty)}</p>
                     </div>
                   </div>
                 )}
@@ -190,7 +190,7 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
 
       {/* 2. Customer */}
       <section aria-labelledby={`${idBase}-customer`} className="rounded-[var(--radius-card)] border border-line bg-surface p-5 sm:p-6">
-        <h2 id={`${idBase}-customer`} className="text-lg font-bold">
+        <h2 id={`${idBase}-customer`} className="text-base font-semibold">
           2. Who are we delivering to?
         </h2>
         <p className="mt-1 text-sm text-muted">Your customer&apos;s details. We ship directly to them.</p>
@@ -237,7 +237,7 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
 
       {/* 3. Total + payment */}
       <section aria-labelledby={`${idBase}-pay`} className="rounded-[var(--radius-card)] border border-line bg-surface p-5 sm:p-6">
-        <h2 id={`${idBase}-pay`} className="text-lg font-bold">
+        <h2 id={`${idBase}-pay`} className="text-base font-semibold">
           3. Pay for this order
         </h2>
         <dl className="mt-4 space-y-2 rounded-2xl bg-surface-2/70 p-4 text-sm">
@@ -250,8 +250,8 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
             <dd className="font-medium">{formatPKR(totals.shippingFee)}</dd>
           </div>
           <div className="flex justify-between border-t border-line pt-2 text-base">
-            <dt className="font-bold">Total to pay</dt>
-            <dd className="font-extrabold">{formatPKR(totals.total)}</dd>
+            <dt className="font-semibold">Total to pay</dt>
+            <dd className="font-semibold">{formatPKR(totals.total)}</dd>
           </div>
         </dl>
         <div className="mt-6">

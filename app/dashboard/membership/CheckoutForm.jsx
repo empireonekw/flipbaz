@@ -29,7 +29,7 @@ export default function CheckoutForm({ plans, accounts, defaultPlanId }) {
       {state.message && <Alert tone="error">{state.message}</Alert>}
 
       <fieldset>
-        <legend className="mb-3 text-lg font-bold">1. Choose your plan</legend>
+        <legend className="mb-3 text-base font-semibold">1. Choose your plan</legend>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {plans.map((p) => {
             const save = planDiscountPercent(p.pricePerMonth, base);
@@ -47,7 +47,7 @@ export default function CheckoutForm({ plans, accounts, defaultPlanId }) {
                   className="mt-1 accent-brand-700"
                 />
                 <span className="flex-1">
-                  <span className="flex flex-wrap items-center gap-2 font-bold">
+                  <span className="flex flex-wrap items-center gap-2 font-semibold">
                     {p.name}
                     {p.isRecommended && (
                       <span className="rounded-full bg-accent-100 px-2 py-0.5 text-xs font-semibold text-accent-800 dark:bg-accent-900/40 dark:text-accent-200">
@@ -60,7 +60,7 @@ export default function CheckoutForm({ plans, accounts, defaultPlanId }) {
                     {save > 0 ? ` · save ${save}%` : ""}
                   </span>
                 </span>
-                <span className="text-right font-extrabold">{formatPKR(p.totalPrice)}</span>
+                <span className="text-right font-semibold">{formatPKR(p.totalPrice)}</span>
               </label>
             );
           })}
@@ -69,7 +69,7 @@ export default function CheckoutForm({ plans, accounts, defaultPlanId }) {
       </fieldset>
 
       <section aria-labelledby="pay-heading">
-        <h2 id="pay-heading" className="mb-3 text-lg font-bold">
+        <h2 id="pay-heading" className="mb-3 text-base font-semibold">
           2. Pay and upload proof
         </h2>
         <PaymentProofFields accounts={accounts} amount={plan?.totalPrice ?? 0} errors={errors} values={values} />

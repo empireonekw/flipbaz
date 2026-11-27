@@ -34,6 +34,8 @@
   --color-accent-900: #76270d;
 
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  /* Seller app: a quieter, denser UI face. */
+  --font-app: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --radius-card: 1.25rem;
 }

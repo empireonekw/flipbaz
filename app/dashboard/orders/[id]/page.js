@@ -25,7 +25,7 @@ function PaymentSection({ order, payment }) {
   const needsPayment = order.status === "PENDING_PAYMENT" && (!payment || payment.status === "REJECTED");
   return (
     <section aria-labelledby="payment-heading" className={card}>
-      <h2 id="payment-heading" className="text-lg font-bold">
+      <h2 id="payment-heading" className="text-base font-semibold">
         Payment
       </h2>
       {payment && (
@@ -87,7 +87,7 @@ async function OrderDetail({ params, searchParams }) {
         ← All orders
       </Link>
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <h1 className="font-mono text-2xl font-extrabold tracking-tight sm:text-3xl">{order.orderNumber}</h1>
+        <h1 className="font-mono text-2xl font-semibold tracking-tight">{order.orderNumber}</h1>
         <OrderStatusBadge status={order.status} />
       </div>
       <p className="mt-1 text-sm text-muted">
@@ -110,20 +110,20 @@ async function OrderDetail({ params, searchParams }) {
         <div className="space-y-5">
           {order.trackingNumber && (
             <section aria-labelledby="tracking-heading" className={`${card} border-brand-200 dark:border-brand-800`}>
-              <h2 id="tracking-heading" className="text-lg font-bold">
+              <h2 id="tracking-heading" className="text-base font-semibold">
                 Tracking
               </h2>
               <p className="mt-2 text-sm text-muted">Share this with your customer.</p>
               <div className="mt-3 flex flex-wrap items-center gap-3">
                 <span className="rounded-lg bg-surface-2 px-3 py-1.5 text-sm font-semibold">{order.courier || "Courier"}</span>
-                <span className="font-mono text-lg font-bold">{order.trackingNumber}</span>
+                <span className="font-mono text-base font-semibold">{order.trackingNumber}</span>
                 <CopyText value={order.trackingNumber} label="tracking number" />
               </div>
             </section>
           )}
 
           <section aria-labelledby="items-heading" className={card}>
-            <h2 id="items-heading" className="text-lg font-bold">
+            <h2 id="items-heading" className="text-base font-semibold">
               Items
             </h2>
             <ul className="mt-3 divide-y divide-line">
@@ -152,7 +152,7 @@ async function OrderDetail({ params, searchParams }) {
                 <dt className="text-muted">Shipping</dt>
                 <dd>{formatPKR(order.shippingFee)}</dd>
               </div>
-              <div className="flex justify-between text-base font-bold">
+              <div className="flex justify-between text-base font-semibold">
                 <dt>Total</dt>
                 <dd>{formatPKR(order.total)}</dd>
               </div>
@@ -164,14 +164,14 @@ async function OrderDetail({ params, searchParams }) {
 
         <div className="space-y-5">
           <section aria-labelledby="status-heading" className={card}>
-            <h2 id="status-heading" className="mb-4 text-lg font-bold">
+            <h2 id="status-heading" className="mb-4 text-base font-semibold">
               Status
             </h2>
             <OrderTimeline status={order.status} history={order.statusHistory} />
           </section>
 
           <section aria-labelledby="customer-heading" className={card}>
-            <h2 id="customer-heading" className="text-lg font-bold">
+            <h2 id="customer-heading" className="text-base font-semibold">
               Deliver to
             </h2>
             <address className="mt-2 text-sm not-italic">

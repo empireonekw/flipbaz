@@ -135,7 +135,7 @@ export default function ChatWidget({ firstName }) {
         >
           <div className="flex items-center justify-between gap-3 bg-[#0f1714] px-4 py-3 text-white">
             <div>
-              <p className="font-bold">Flip Baz support</p>
+              <p className="font-semibold">Flip Baz support</p>
               <p className="flex items-center gap-1.5 text-xs text-white/70">
                 <span className={`h-2 w-2 rounded-full ${connected ? "bg-emerald-400" : "bg-white/40"}`} aria-hidden="true" />
                 {connected ? "Online · Mon–Sat, 10am–7pm" : "Connecting…"}
@@ -182,7 +182,7 @@ export default function ChatWidget({ firstName }) {
       >
         <ShellIcon name={open ? "close" : "chat"} className="h-6 w-6" />
         {!open && unread > 0 && (
-          <span className="absolute -right-1 -top-1 min-w-6 rounded-full bg-accent-500 px-1.5 text-center text-xs font-bold leading-6 text-white">
+          <span className="absolute -right-1 -top-1 min-w-6 rounded-full bg-accent-500 px-1.5 text-center text-xs font-semibold leading-6 text-white">
             {unread > 9 ? "9+" : unread}
           </span>
         )}

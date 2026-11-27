@@ -29,7 +29,7 @@ export default async function SidebarUser() {
   return (
     <div className="space-y-2 text-white">
       <div className="flex items-center gap-3 px-2">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold" aria-hidden="true">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600 text-sm font-semibold" aria-hidden="true">
           {initials(user.name)}
         </span>
         <span className="min-w-0 flex-1">
@@ -45,7 +45,7 @@ export default async function SidebarUser() {
       >
         <ShellIcon name="bell" />
         {unread > 0 && (
-          <span className="absolute -right-0.5 -top-0.5 min-w-5 rounded-full bg-accent-500 px-1 text-center text-[11px] font-bold leading-5 text-white">
+          <span className="absolute -right-0.5 -top-0.5 min-w-5 rounded-full bg-accent-500 px-1 text-center text-[11px] font-semibold leading-5 text-white">
             {unread > 9 ? "9+" : unread}
           </span>
         )}

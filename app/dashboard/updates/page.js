@@ -58,7 +58,7 @@ async function UpdatesList() {
 export default function UpdatesPage() {
   return (
     <>
-      <h1 className="text-3xl font-extrabold tracking-tight">Updates</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">Updates</h1>
       <p className="mt-1 mb-6 text-muted">Payments, order progress and replies from our team.</p>
       <Suspense fallback={<div className="h-64 animate-pulse rounded-[var(--radius-card)] bg-surface-2" />}>
         <UpdatesList />

@@ -22,10 +22,10 @@ export default function MembershipStatusCard({ access, pending, showActions = tr
   return (
     <section aria-labelledby="membership-heading" className="rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-sm sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 id="membership-heading" className="text-lg font-bold">
+        <h2 id="membership-heading" className="text-base font-semibold">
           Membership
         </h2>
-        <span className={`rounded-full px-3 py-1 text-xs font-bold ${badge[access.state] ?? badge.NONE}`}>{label[access.state] ?? label.NONE}</span>
+        <span className={`rounded-full px-3 py-1 text-xs font-semibold ${badge[access.state] ?? badge.NONE}`}>{label[access.state] ?? label.NONE}</span>
       </div>
 
       {access.state === "ACTIVE" && m && (
@@ -40,7 +40,7 @@ export default function MembershipStatusCard({ access, pending, showActions = tr
           </div>
           <div>
             <p className="text-xs text-muted">Days left</p>
-            <p className={`text-2xl font-extrabold ${access.daysLeft <= 7 ? "text-accent-600 dark:text-accent-300" : "text-brand-700 dark:text-brand-400"}`}>
+            <p className={`text-2xl font-semibold ${access.daysLeft <= 7 ? "text-accent-600 dark:text-accent-300" : "text-brand-700 dark:text-brand-400"}`}>
               {access.daysLeft}
             </p>
           </div>

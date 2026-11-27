@@ -17,9 +17,9 @@ const UserFallback = () => <div className="h-24 animate-pulse rounded-xl bg-whit
  */
 export default function DashboardLayout({ children }) {
   return (
-    <div className="min-h-dvh bg-page lg:grid lg:grid-cols-[17rem_1fr]">
-      <aside className="sticky top-0 hidden h-dvh flex-col bg-[#0f1714] px-4 pb-4 pt-5 text-white lg:flex">
-        <Link href="/dashboard" className="mb-6 flex items-center gap-2 px-2 text-lg font-extrabold tracking-tight">
+    <div className="min-h-dvh bg-page font-app text-[15px] lg:grid lg:grid-cols-[15rem_1fr]">
+      <aside className="sticky top-0 hidden h-dvh flex-col bg-[#0f1714] px-3 pb-3 pt-4 text-white lg:flex">
+        <Link href="/dashboard" className="mb-5 flex items-center gap-2 px-2 font-sans text-base font-extrabold tracking-tight">
           <LogoMark className="h-8 w-8" />
           <span>
             flip<span className="text-brand-300">baz</span>
@@ -46,7 +46,7 @@ export default function DashboardLayout({ children }) {
             </Suspense>
           }
         />
-        <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-10 lg:pt-10">
+        <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-10 lg:pt-8">
           {children}
         </main>
       </div>

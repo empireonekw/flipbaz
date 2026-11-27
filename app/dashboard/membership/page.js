@@ -45,7 +45,7 @@ async function MembershipContent({ searchParams }) {
 
       {awaitingReview ? (
         <section className="rounded-[var(--radius-card)] border border-line bg-surface p-5 sm:p-6" aria-labelledby="review-heading">
-          <h2 id="review-heading" className="text-lg font-bold">
+          <h2 id="review-heading" className="text-base font-semibold">
             Payment under review
           </h2>
           <dl className="mt-4 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
@@ -90,7 +90,7 @@ async function MembershipContent({ searchParams }) {
         </section>
       ) : (
         <section id="checkout" className="scroll-mt-24 rounded-[var(--radius-card)] border border-line bg-surface p-5 sm:p-6" aria-labelledby="checkout-heading">
-          <h2 id="checkout-heading" className="text-xl font-extrabold tracking-tight">
+          <h2 id="checkout-heading" className="text-lg font-semibold tracking-tight">
             {access.state === "ACTIVE" ? "Extend your membership" : access.state === "EXPIRED" ? "Renew your membership" : "Get your membership"}
           </h2>
           {access.state === "ACTIVE" && (
@@ -120,7 +120,7 @@ export default function MembershipPage({ searchParams }) {
   return (
     <>
       <DashboardBanner />
-      <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Membership</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">Membership</h1>
       <p className="mt-1 mb-6 text-muted">Your plan, renewals and payments.</p>
       <Suspense fallback={<div className="h-96 animate-pulse rounded-[var(--radius-card)] bg-surface-2" />}>
         <MembershipContent searchParams={searchParams} />
