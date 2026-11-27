@@ -1,13 +1,13 @@
 import { connectDB } from "@/lib/db";
-import { Payment } from "@/lib/models";
+import { Payment, ProductRequest } from "@/lib/models";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { PRIVATE_FOLDERS, readUpload } from "@/lib/storage";
 
 /**
  * GET /uploads/[folder]/[name]
  * Serves files saved by lib/storage.js. Product and category images are
- * public; payment screenshots are visible only to the seller who uploaded
- * them and to admins.
+ * public; payment screenshots and custom-request photos are visible only to
+ * the seller who uploaded them and to admins.
  */
 export async function GET(_request, { params }) {
   const { folder, name } = await params;
@@ -17,7 +17,13 @@ export async function GET(_request, { params }) {
     if (!user) return new Response("Not found", { status: 404 });
     if (user.role !== "ADMIN") {
       await connectDB();
-      const owns = await Payment.exists({ user: user.id, screenshotUrl: `/uploads/${folder}/${name}` });
+      const url = `/uploads/${folder}/${name}`;
+      const owns =
+        folder === "payments"
+          ? await Payment.exists({ user: user.id, screenshotUrl: url })
+          : folder === "requests"
+            ? await ProductRequest.exists({ seller: user.id, image: url })
+            : null;
       if (!owns) return new Response("Not found", { status: 404 });
     }
   }

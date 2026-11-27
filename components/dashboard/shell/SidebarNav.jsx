@@ -7,10 +7,12 @@ import { SELLER_NAV, SELLER_NAV_BOTTOM } from "./nav";
 
 /** @param {{ item: Object, pathname: string | null, onNavigate?: () => void }} props */
 function NavItem({ item, pathname, onNavigate }) {
+  const inside = (path) => pathname === path || pathname.startsWith(`${path}/`);
+  // Sub-items only show while their section is open.
+  if (item.parent && (pathname == null || !inside(item.parent))) return null;
   const active =
-    pathname != null &&
-    (item.exact ? pathname === item.href : pathname.startsWith(item.href) && !(item.not && pathname.startsWith(item.not)));
-  const base = "group flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors";
+    pathname != null && (item.exact ? pathname === item.href : inside(item.href) && !item.not?.some((p) => inside(p)));
+  const base = `group flex items-center gap-2.5 rounded-lg py-2 text-sm font-medium transition-colors ${item.parent ? "pl-8 pr-2.5" : "px-2.5"}`;
 
   if (item.soon) {
     return (
@@ -31,7 +33,7 @@ function NavItem({ item, pathname, onNavigate }) {
         aria-current={active ? "page" : undefined}
         className={`${base} ${active ? "bg-white/12 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]" : "text-white/70 hover:bg-white/6 hover:text-white"}`}
       >
-        <ShellIcon name={item.icon} className={`h-[18px] w-[18px] ${active ? "text-brand-300" : ""}`} />
+        <ShellIcon name={item.icon} className={`${item.parent ? "h-4 w-4" : "h-[18px] w-[18px]"} ${active ? "text-brand-300" : ""}`} />
         {item.label}
       </Link>
     </li>

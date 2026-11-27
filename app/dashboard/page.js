@@ -190,10 +190,10 @@ function Updates({ items, unread }) {
 /** Order pipeline tiles + account balance. */
 function OrderFlow({ flow, balance }) {
   const tiles = [
-    { label: "Awaiting payment", sub: "Upload payment proof", n: flow.awaitingPayment, icon: "cash", href: "/dashboard/orders?status=PENDING_PAYMENT" },
-    { label: "Payment review", sub: "We're verifying", n: flow.paymentReview, icon: "review", href: "/dashboard/orders?status=PENDING_PAYMENT" },
-    { label: "In production", sub: "Being made & checked", n: flow.inProduction, icon: "factory", href: "/dashboard/orders" },
-    { label: "Shipped", sub: "On the way to buyers", n: flow.shipped, icon: "truck", href: "/dashboard/orders?status=SHIPPED" },
+    { label: "Awaiting payment", sub: "Upload payment proof", n: flow.awaitingPayment, icon: "cash", href: "/dashboard/orders?tab=action" },
+    { label: "Payment review", sub: "We're verifying", n: flow.paymentReview, icon: "review", href: "/dashboard/orders?tab=review" },
+    { label: "In production", sub: "Being made & checked", n: flow.inProduction, icon: "factory", href: "/dashboard/orders?tab=production" },
+    { label: "Shipped", sub: "On the way to buyers", n: flow.shipped, icon: "truck", href: "/dashboard/orders?tab=shipping" },
   ];
   return (
     <section aria-labelledby="flow-heading" className={card}>

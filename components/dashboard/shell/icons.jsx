@@ -30,6 +30,14 @@ const paths = {
   arrow: "M5 12h14m-5-5 5 5-5 5",
   check: "m5 12.5 4.5 4.5L19 7.5",
   logout: "M14 4h5v16h-5M10 8l-4 4 4 4M6 12h10",
+  search: "M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Zm9.5 3-4.8-4.8",
+  bookmark: "M7 4h10v16l-5-3.5L7 20V4Z",
+  request: "M12 4v16M4 12h16M5.5 5.5h13v13h-13z",
+  chevronDown: "m6 9 6 6 6-6",
+  image: "M4 5h16v14H4zM4 16l4.5-4.5 4 4 2.5-2.5L20 18M15.5 9.5h.01",
+  copy: "M9 9h11v11H9zM5 15H4V4h11v1",
+  download: "M12 4v11m0 0-4-4m4 4 4-4M5 19h14",
+  trash: "M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13",
 };
 
 /**
