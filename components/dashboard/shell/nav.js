@@ -14,8 +14,8 @@ export const SELLER_NAV = [
   { href: "/dashboard/catalog/requests", label: "Custom requests", icon: "request", parent: "/dashboard/catalog" },
   { href: "/dashboard/membership", label: "Membership", icon: "membership" },
   { href: "/dashboard/services", label: "Services", icon: "services", soon: true },
-  { href: "/dashboard/finances", label: "Finances", icon: "finances", soon: true },
-  { href: "/dashboard/analytics", label: "Analytics", icon: "analytics", soon: true },
+  { href: "/dashboard/finances", label: "Finances", icon: "finances" },
+  { href: "/dashboard/analytics", label: "Analytics", icon: "analytics" },
   { href: "/dashboard/guidance", label: "Guidance", icon: "guidance", soon: true },
 ];
 

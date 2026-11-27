@@ -220,13 +220,17 @@ function OrderFlow({ flow, balance }) {
           </li>
         ))}
       </ol>
-      <div className="mt-4 flex items-center justify-between rounded-xl border border-line px-4 py-2.5">
+      <Link href="/dashboard/finances" className="mt-4 flex items-center justify-between rounded-xl border border-line px-4 py-2.5 hover:bg-surface-2/50">
         <span className="flex items-center gap-2 text-sm">
           <ShellIcon name="wallet" className="h-4 w-4 text-muted" />
           Account balance
         </span>
-        <span className="font-semibold">{formatPKR(balance)}</span>
-      </div>
+        <span className="flex items-center gap-2">
+          <span className="font-semibold tabular-nums">{formatPKR(Math.abs(balance))}</span>
+          <span className="text-xs text-muted">{balance > 0 ? "You owe" : balance < 0 ? "In credit" : "Settled"}</span>
+          <ShellIcon name="arrow" className="h-4 w-4 text-muted" />
+        </span>
+      </Link>
     </section>
   );
 }

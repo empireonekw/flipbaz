@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import OrderPaymentForm from "./OrderPaymentForm";
+import SaleForm from "./SaleForm";
 import CancelOrderButton from "./CancelOrderButton";
 import OrderStatusBadge from "@/components/orders/OrderStatusBadge";
 import OrderTimeline from "@/components/orders/OrderTimeline";
@@ -185,6 +186,16 @@ async function OrderDetail({ params, searchParams }) {
             </address>
             {order.notes && <p className="mt-3 text-sm text-muted">Notes: {order.notes}</p>}
           </section>
+
+          {order.status !== "CANCELLED" && (
+            <section aria-labelledby="sale-heading" className={card}>
+              <h2 id="sale-heading" className="text-base font-semibold">
+                Your sale
+              </h2>
+              <p className="mt-1 text-sm text-muted">Only you see this. It powers your profit in Analytics.</p>
+              <SaleForm orderId={order._id} orderTotal={order.total} salePrice={order.salePrice} marketplaceFees={order.marketplaceFees} />
+            </section>
+          )}
 
           {canSellerCancel(order, payment) && (
             <div className="px-1">

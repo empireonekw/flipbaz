@@ -22,7 +22,7 @@ export async function GET(_request, { params }) {
         folder === "payments"
           ? await Payment.exists({ user: user.id, screenshotUrl: url })
           : folder === "requests"
-            ? await ProductRequest.exists({ seller: user.id, image: url })
+            ? await ProductRequest.exists({ seller: user.id, $or: [{ images: url }, { image: url }] })
             : null;
       if (!owns) return new Response("Not found", { status: 404 });
     }

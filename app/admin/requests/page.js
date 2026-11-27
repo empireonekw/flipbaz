@@ -4,8 +4,8 @@ import ReplyForm from "./ReplyForm";
 import { AdminHeader, EmptyState, FilterTabs, Pagination, adminCard, one, withQuery } from "@/components/admin/AdminUI";
 import { requireAdmin } from "@/lib/auth/dal";
 import { listProductRequests } from "@/lib/admin/requests";
-import { PRODUCT_REQUEST_STATUSES, PRODUCT_REQUEST_STATUS_LABELS } from "@/lib/models/constants";
-import { formatDateTime, formatPKR } from "@/lib/format";
+import { PRODUCT_REQUEST_STATUSES, PRODUCT_REQUEST_STATUS_LABELS, REQUEST_SHIPPING_LABELS } from "@/lib/models/constants";
+import { formatDateTime } from "@/lib/format";
 
 export const metadata = { title: "Requests · Admin" };
 
@@ -54,14 +54,22 @@ async function Queue({ searchParams }) {
                     )}{" "}
                     · {formatDateTime(r.createdAt)}
                   </p>
-                  <dl className="mt-3 grid grid-cols-2 gap-2 text-sm">
+                  <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                     <div>
-                      <dt className="text-xs text-muted">Pieces / month</dt>
-                      <dd>{r.quantity ?? "—"}</dd>
+                      <dt className="text-xs text-muted">Category</dt>
+                      <dd>{r.category?.name ?? "Not sure"}</dd>
                     </div>
                     <div>
-                      <dt className="text-xs text-muted">Target cost</dt>
-                      <dd>{r.targetPrice ? formatPKR(r.targetPrice) : "—"}</dd>
+                      <dt className="text-xs text-muted">Sizes / colours</dt>
+                      <dd>{r.variants || "—"}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs text-muted">Shipping</dt>
+                      <dd>{r.shipping ? REQUEST_SHIPPING_LABELS[r.shipping] : "—"}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs text-muted">Ship to</dt>
+                      <dd>{r.shipTo || "—"}</dd>
                     </div>
                   </dl>
                   {r.details && <p className="mt-3 whitespace-pre-line text-sm">{r.details}</p>}
@@ -71,14 +79,25 @@ async function Queue({ searchParams }) {
                         Reference link
                       </a>
                     )}
-                    {r.image && (
-                      <a href={r.image} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-brand-700 underline dark:text-brand-400">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={r.image} alt="Seller's reference photo" className="h-16 w-16 rounded-lg border border-line object-cover" />
-                        Open photo
-                      </a>
-                    )}
                   </div>
+                  {r.notes && (
+                    <p className="mt-3 text-sm">
+                      <span className="text-xs text-muted">Notes: </span>
+                      {r.notes}
+                    </p>
+                  )}
+                  {(r.images?.length > 0 || r.image) && (
+                    <ul className="mt-3 flex flex-wrap gap-2" aria-label="Seller's photos">
+                      {(r.images?.length ? r.images : [r.image]).map((src, i) => (
+                        <li key={src}>
+                          <a href={src} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-lg border border-line hover:opacity-90">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={src} alt={`Seller's photo ${i + 1}`} className="h-20 w-20 object-cover" />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
                 <ReplyForm request={r} />
               </div>

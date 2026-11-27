@@ -60,7 +60,7 @@ async function Results({ searchParams }) {
                 Clear filters
               </Link>
             )}
-            <Link href={`${BASE}/requests`} className={pagerLink}>
+            <Link href={`${BASE}/requests/new`} className={pagerLink}>
               Request an item
             </Link>
           </div>
@@ -101,7 +101,7 @@ export default function DashboardCatalogPage({ searchParams }) {
           <p className="mt-1 text-sm text-muted">Prices are what you pay us. You set your own selling price.</p>
         </div>
         <Link
-          href={`${BASE}/requests`}
+          href={`${BASE}/requests/new`}
           className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 text-[13px] font-medium shadow-xs hover:bg-surface-2"
         >
           <ShellIcon name="plus" className="h-4 w-4" />

@@ -4,10 +4,10 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireSeller } from "@/lib/auth/dal";
 import { getMemberAccess } from "@/lib/membership";
-import { OrderError, cancelSellerOrder, createOrderWithPayment } from "@/lib/orders";
+import { OrderError, cancelSellerOrder, createOrderWithPayment, setOrderSale } from "@/lib/orders";
 import { PaymentError, submitOrderPayment } from "@/lib/payments";
 import { UploadError } from "@/lib/storage";
-import { orderPaymentSchema, placeOrderSchema } from "@/lib/validators/order";
+import { orderPaymentSchema, orderSaleSchema, placeOrderSchema } from "@/lib/validators/order";
 import { fieldErrors } from "@/lib/validators/common";
 import { logError } from "@/lib/security/log";
 import { LIMITS } from "@/lib/security/config";
@@ -17,7 +17,7 @@ import { checkLimit } from "@/lib/security/guard";
 const isUserError = (err) => err instanceof OrderError || err instanceof PaymentError || err instanceof UploadError;
 
 /** Text fields echoed back so the form keeps them after an error. */
-const TEXT_FIELDS = ["lines", "customerName", "customerPhone", "address", "city", "marketplace", "marketplaceOrderRef", "notes", "method", "transactionId"];
+const TEXT_FIELDS = ["lines", "customerName", "customerPhone", "address", "city", "marketplace", "marketplaceOrderRef", "notes", "salePrice", "marketplaceFees", "method", "transactionId"];
 
 /**
  * Place an order for an end customer, with payment proof.
@@ -106,4 +106,35 @@ export async function cancelOrderAction(_prev, formData) {
   }
   revalidatePath(`/dashboard/orders/${orderId}`);
   return { ok: true };
+}
+
+/**
+ * Save what the seller's customer paid and the marketplace fees on an order
+ * (for their profit analytics). Empty fields clear the value.
+ * @param {Object} _prev
+ * @param {FormData} formData  orderId, salePrice, marketplaceFees
+ */
+export async function updateOrderSaleAction(_prev, formData) {
+  const seller = await requireSeller("/dashboard/orders");
+  const values = {
+    orderId: String(formData.get("orderId") ?? ""),
+    salePrice: String(formData.get("salePrice") ?? "").slice(0, 20),
+    marketplaceFees: String(formData.get("marketplaceFees") ?? "").slice(0, 20),
+  };
+  const parsed = orderSaleSchema.safeParse(values);
+  if (!parsed.success) return { errors: fieldErrors(parsed.error), values, at: Date.now() };
+
+  const limited = checkLimit("order-sale", seller.id, LIMITS.profileUpdate);
+  if (limited) return { ...limited, values, at: Date.now() };
+
+  try {
+    await setOrderSale(seller.id, parsed.data.orderId, parsed.data);
+  } catch (err) {
+    if (err instanceof OrderError) return { message: err.message, values, at: Date.now() };
+    logError("order-sale", err);
+    return { message: "Something went wrong. Please try again.", values, at: Date.now() };
+  }
+  revalidatePath(`/dashboard/orders/${parsed.data.orderId}`);
+  revalidatePath("/dashboard/analytics");
+  return { ok: "Saved.", at: Date.now() };
 }

@@ -41,6 +41,9 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
     return [newLine(start)];
   });
   const idBase = useId();
+  // Optional sale figures, kept in state only for the live profit preview.
+  const [sale, setSale] = useState({ price: values.salePrice ?? "", fees: values.marketplaceFees ?? "" });
+  const rupees = (v) => Number(String(v).replace(/[^\d]/g, "")) || 0;
 
   // Group products by category for the <select>.
   const groups = useMemo(() => {
@@ -232,6 +235,46 @@ export default function OrderForm({ products, accounts, initialProductSlug }) {
             error={errors.marketplaceOrderRef}
           />
           <Field as="textarea" label="Notes for us (optional)" name="notes" rows={2} defaultValue={values.notes} error={errors.notes} />
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-dashed border-line p-4">
+          <p className="text-sm font-medium">
+            Your sale <span className="font-normal text-muted">(optional, only you see this)</span>
+          </p>
+          <p className="mt-0.5 text-xs text-muted">Add what your customer paid and what the marketplace kept, and Analytics shows your real profit. You can also add it later on the order page.</p>
+          <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field
+              label="Your customer paid (Rs)"
+              name="salePrice"
+              inputMode="numeric"
+              autoComplete="off"
+              placeholder="e.g. 4500"
+              defaultValue={values.salePrice}
+              error={errors.salePrice}
+              onChange={(e) => setSale((s) => ({ ...s, price: e.target.value }))}
+            />
+            <Field
+              label="Marketplace fees (Rs)"
+              name="marketplaceFees"
+              inputMode="numeric"
+              autoComplete="off"
+              placeholder="Commission, payment fees…"
+              defaultValue={values.marketplaceFees}
+              error={errors.marketplaceFees}
+              onChange={(e) => setSale((s) => ({ ...s, fees: e.target.value }))}
+            />
+          </div>
+          {rupees(sale.price) > 0 && totals.total > 0 && (
+            <p className="mt-3 text-sm" aria-live="polite">
+              Your profit on this order:{" "}
+              <strong className={rupees(sale.price) - rupees(sale.fees) - totals.total >= 0 ? "text-brand-700 dark:text-brand-400" : "text-red-600 dark:text-red-400"}>
+                {formatPKR(rupees(sale.price) - rupees(sale.fees) - totals.total)}
+              </strong>{" "}
+              <span className="text-muted">
+                ({formatPKR(rupees(sale.price))} − {formatPKR(rupees(sale.fees))} fees − {formatPKR(totals.total)} to Flip Baz)
+              </span>
+            </p>
+          )}
         </div>
       </section>
 

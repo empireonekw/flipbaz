@@ -38,6 +38,10 @@ const paths = {
   copy: "M9 9h11v11H9zM5 15H4V4h11v1",
   download: "M12 4v11m0 0-4-4m4 4 4-4M5 19h14",
   trash: "M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13",
+  receipt: "M6 3h12v18l-3-2-3 2-3-2-3 2V3Zm3 5h6M9 12h6M9 16h3",
+  box: "M12 3 4 7v10l8 4 8-4V7l-8-4Zm-8 4 8 4 8-4M12 11v10",
+  trend: "M3 17l6-6 4 4 8-8M15 7h6v6",
+  repeat: "M17 2l3 3-3 3M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3M20 13v2a4 4 0 0 1-4 4H4",
 };
 
 /**
