@@ -75,6 +75,18 @@ body {
   color: var(--ink);
 }
 
+/*
+ * Scroll without a visible scrollbar (sidebars, drawers, sideways tab rows).
+ * Still scrolls with wheel, touch, trackpad and keyboard.
+ */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Visible, consistent keyboard focus everywhere. */
 :focus-visible {
   outline: 3px solid var(--color-brand-500);

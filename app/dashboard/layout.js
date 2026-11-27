@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { LogoMark } from "@/components/ui/Logo";
+import { LogoImage } from "@/components/ui/Logo";
 import SidebarNav, { SidebarNavFallback } from "@/components/dashboard/shell/SidebarNav";
 import SidebarUser from "@/components/dashboard/shell/SidebarUser";
 import MobileShell from "@/components/dashboard/shell/MobileShell";
@@ -19,14 +19,11 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="min-h-dvh bg-page font-app text-[15px] lg:grid lg:grid-cols-[15rem_1fr]">
       <aside className="sticky top-0 hidden h-dvh flex-col bg-[#0f1714] px-3 pb-3 pt-4 text-white lg:flex">
-        <Link href="/dashboard" className="mb-5 flex items-center gap-2 px-2 font-sans text-base font-extrabold tracking-tight">
-          <LogoMark className="h-8 w-8" />
-          <span>
-            flip<span className="text-brand-300">baz</span>
-          </span>
+        <Link href="/dashboard" aria-label="FlipBaz seller home" className="mb-5 flex items-center gap-2 px-2">
+          <LogoImage tone="dark" className="h-8 w-auto" priority />
           <span className="ml-1 rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/60">Seller</span>
         </Link>
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+        <div className="no-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto">
           <Suspense fallback={<SidebarNavFallback />}>
             <SidebarNav />
           </Suspense>

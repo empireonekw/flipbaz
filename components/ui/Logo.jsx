@@ -1,56 +1,40 @@
+import Image from "next/image";
 import Link from "next/link";
 
+/** Logo artwork: original colours (purple + teal), and a version for dark backgrounds. */
+const SRC = { light: "/brand/flipbaz-logo.png", onDark: "/brand/flipbaz-logo-on-dark.png" };
+const W = 414;
+const H = 160;
+
 /**
- * Flip Baz mark: two arrows chasing each other inside a rounded tile,
- * representing a product "flipping" from our workshop to your customer.
- * @param {{ className?: string }} props
+ * The FlipBaz logo image (no link).
+ *
+ * - tone "auto": original colours in light mode, the on-dark version in dark mode
+ * - tone "dark": always the on-dark version (for the always-dark sidebars and top bars)
+ *
+ * Height comes from `className` (default h-8); the width follows the logo's shape.
+ * @param {{ tone?: "auto"|"dark", className?: string, priority?: boolean }} props
  */
-export function LogoMark({ className = "h-8 w-8" }) {
+export function LogoImage({ tone = "auto", className = "h-8 w-auto", priority = false }) {
+  if (tone === "dark") {
+    return <Image src={SRC.onDark} alt="FlipBaz" width={W} height={H} priority={priority} className={className} />;
+  }
   return (
-    <svg viewBox="0 0 40 40" className={className} aria-hidden="true">
-      <rect width="40" height="40" rx="11" className="fill-brand-700 dark:fill-brand-500" />
-      <path
-        d="M11 17a9 9 0 0 1 15.5-5.2"
-        fill="none"
-        stroke="#fff"
-        strokeWidth="3.2"
-        strokeLinecap="round"
-      />
-      <path d="M28.5 7.5v6.3h-6.3" fill="none" stroke="#fff" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
-      <path
-        d="M29 23a9 9 0 0 1-15.5 5.2"
-        fill="none"
-        className="stroke-accent-300"
-        strokeWidth="3.2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M11.5 32.5v-6.3h6.3"
-        fill="none"
-        className="stroke-accent-300"
-        strokeWidth="3.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <>
+      <Image src={SRC.light} alt="FlipBaz" width={W} height={H} priority={priority} className={`${className} dark:hidden`} />
+      <Image src={SRC.onDark} alt="FlipBaz" width={W} height={H} priority={priority} className={`${className} hidden dark:block`} />
+    </>
   );
 }
 
 /**
- * Full logo: mark + "flip baz" wordmark, linking home.
- * @param {{ className?: string, href?: string }} props
+ * Full logo linking home (public header, footer, login and sign-up pages).
+ * @param {{ className?: string, href?: string, tone?: "auto"|"dark", imgClassName?: string }} props
  */
-export default function Logo({ className = "", href = "/" }) {
+export default function Logo({ className = "", href = "/", tone = "auto", imgClassName = "h-8 w-auto" }) {
   return (
-    <Link
-      href={href}
-      className={`inline-flex items-center gap-2 rounded-lg ${className}`}
-      aria-label="Flip Baz home"
-    >
-      <LogoMark />
-      <span className="text-xl font-extrabold tracking-tight text-ink">
-        flip<span className="text-brand-700 dark:text-brand-400">baz</span>
-      </span>
+    <Link href={href} className={`inline-flex items-center rounded-lg ${className}`} aria-label="FlipBaz home">
+      <LogoImage tone={tone} className={imgClassName} priority />
     </Link>
   );
 }

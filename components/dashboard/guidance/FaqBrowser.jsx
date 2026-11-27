@@ -23,7 +23,7 @@ export default function FaqBrowser() {
   return (
     <div>
       <div className="rounded-2xl border border-line bg-surface shadow-xs">
-        <div role="tablist" aria-label="FAQ topics" className="flex gap-1 overflow-x-auto border-b border-line px-2 py-2">
+        <div role="tablist" aria-label="FAQ topics" className="no-scrollbar flex gap-1 overflow-x-auto border-b border-line px-2 py-2">
           {[{ id: "all", label: "All" }, ...FAQ_CATEGORIES].map((c) => (
             <button
               key={c.id}

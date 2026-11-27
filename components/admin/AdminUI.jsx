@@ -28,7 +28,7 @@ export function AdminHeader({ title, description, action }) {
  */
 export function FilterTabs({ label, tabs }) {
   return (
-    <nav aria-label={label} className="flex gap-2 overflow-x-auto pb-1">
+    <nav aria-label={label} className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
       {tabs.map((t) => (
         <Link
           key={t.href}

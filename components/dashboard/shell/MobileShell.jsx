@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import { LogoMark } from "@/components/ui/Logo";
+import { LogoImage } from "@/components/ui/Logo";
 import Link from "next/link";
 import ShellIcon from "./icons";
 import SidebarNav, { SidebarNavFallback } from "./SidebarNav";
@@ -27,11 +27,8 @@ export default function MobileShell({ userSlot }) {
   return (
     <div className="lg:hidden">
       <div className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-white/10 bg-[#0f1714] px-4 text-white">
-        <Link href="/dashboard" className="flex items-center gap-2 font-sans font-extrabold tracking-tight">
-          <LogoMark className="h-7 w-7" />
-          <span>
-            flip<span className="text-brand-300">baz</span>
-          </span>
+        <Link href="/dashboard" aria-label="FlipBaz seller home" className="flex items-center">
+          <LogoImage tone="dark" className="h-7 w-auto" priority />
         </Link>
         <button
           type="button"
@@ -49,17 +46,12 @@ export default function MobileShell({ userSlot }) {
           <button type="button" aria-label="Close menu" onClick={() => setOpen(false)} className="absolute inset-0 bg-black/50" />
           <div className="absolute inset-y-0 left-0 flex w-[min(20rem,85vw)] flex-col bg-[#0f1714] px-4 pb-4 pt-3 text-white shadow-2xl">
             <div className="mb-4 flex items-center justify-between">
-              <span className="flex items-center gap-2 font-sans font-extrabold tracking-tight">
-                <LogoMark className="h-7 w-7" />
-                <span>
-                  flip<span className="text-brand-300">baz</span>
-                </span>
-              </span>
+              <LogoImage tone="dark" className="h-7 w-auto" />
               <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:bg-white/10">
                 <ShellIcon name="close" />
               </button>
             </div>
-            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+            <div className="no-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto">
               <Suspense fallback={<SidebarNavFallback />}>
                 <SidebarNav onNavigate={() => setOpen(false)} />
               </Suspense>

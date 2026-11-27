@@ -54,7 +54,7 @@ export default function SiteHeader() {
         Skip to content
       </a>
       <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Logo />
+        <Logo imgClassName="h-9 w-auto sm:h-10" />
         <nav aria-label="Main" className="hidden md:block">
           <ul className="flex items-center gap-1">
             {NAV.map((l) => (

@@ -52,7 +52,7 @@ async function OrdersList({ searchParams }) {
   return (
     <>
       <section className="overflow-hidden rounded-2xl border border-line bg-surface shadow-xs">
-        <nav aria-label="Filter orders" className="flex gap-1 overflow-x-auto border-b border-line px-2 py-2">
+        <nav aria-label="Filter orders" className="no-scrollbar flex gap-1 overflow-x-auto border-b border-line px-2 py-2">
           {[undefined, ...ORDER_STATUSES].map((s) => {
             const active = s === status;
             const n = s ? counts[s] ?? 0 : counts.ALL ?? 0;
