@@ -16,19 +16,23 @@ import { GENERIC_ERROR, logError } from "@/lib/security/log";
  */
 export async function replyRequestAction(_prev, formData) {
   await requireAdmin();
-  const parsed = productRequestReplySchema.safeParse(formToObject(formData));
+  const raw = formToObject(formData);
+  // Echo back only the form's own fields, so the admin's input survives an error.
+  const at = Date.now(); // lets the form re-mount after each submit
+  const values = { status: String(raw.status ?? ""), adminReply: String(raw.adminReply ?? "").slice(0, 500), productSlug: String(raw.productSlug ?? "").slice(0, 120) };
+  const parsed = productRequestReplySchema.safeParse(raw);
   if (!parsed.success) {
     const errors = fieldErrors(parsed.error);
-    return { error: Object.values(errors)[0] ?? GENERIC_ERROR };
+    return { error: Object.values(errors)[0] ?? GENERIC_ERROR, values, at };
   }
   try {
     await replyToProductRequest(parsed.data);
   } catch (err) {
-    if (err instanceof AdminError) return { error: err.message };
+    if (err instanceof AdminError) return { error: err.message, values, at };
     logError("admin-request-reply", err);
-    return { error: GENERIC_ERROR };
+    return { error: GENERIC_ERROR, values, at };
   }
   revalidatePath("/admin/requests");
   revalidatePath("/admin");
-  return { ok: "Saved and the seller was notified." };
+  return { ok: "Saved and the seller was notified.", at };
 }
