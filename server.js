@@ -22,6 +22,10 @@ import { resolveClientIp } from "./lib/security/ip.js";
 import { initBlockPersistence } from "./lib/security/persist.js";
 
 const dev = !process.argv.includes("--production") && process.env.NODE_ENV !== "production";
+// Like `next dev` / `next start`: make NODE_ENV match the mode when it isn't set,
+// so code that checks it (e.g. the dev-only localhost exemption in
+// lib/security/ip.js) can't mistake production for development.
+process.env.NODE_ENV ||= dev ? "development" : "production";
 const portArg = process.argv.find((a) => a.startsWith("--port="))?.split("=")[1];
 const port = Number(portArg || process.env.PORT) || 3000;
 const hostname = process.env.HOST || "localhost";

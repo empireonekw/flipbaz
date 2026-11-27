@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import SessionForm from "./SessionForm";
+import RecordingForm from "./RecordingForm";
 import { deleteSessionAction } from "./actions";
 import { AdminHeader, EmptyState, adminCard } from "@/components/admin/AdminUI";
 import InlineAction from "@/components/admin/InlineAction";
@@ -15,15 +16,16 @@ async function Sessions() {
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.2fr]">
       <section aria-labelledby="new-session" className={adminCard}>
-        <h2 id="new-session" className="mb-4 text-lg font-bold">
+        <h2 id="new-session" className="mb-4 text-base font-semibold">
           Schedule a session
         </h2>
         <SessionForm />
       </section>
       <section aria-labelledby="list-session" className={adminCard}>
-        <h2 id="list-session" className="mb-4 text-lg font-bold">
+        <h2 id="list-session" className="mb-4 text-base font-semibold">
           Upcoming and recent
         </h2>
+        <p className="-mt-2 mb-3 text-sm text-muted">After a session ends, add its recording so members can watch it in Guidance.</p>
         {sessions.length === 0 ? (
           <EmptyState>No sessions scheduled.</EmptyState>
         ) : (
@@ -31,8 +33,8 @@ async function Sessions() {
             {sessions.map((s) => {
               const past = s.ended;
               return (
-                <li key={s._id} className={`flex flex-wrap items-start justify-between gap-3 py-3 ${past ? "opacity-60" : ""}`}>
-                  <div className="min-w-0">
+                <li key={s._id} className="flex flex-wrap items-start justify-between gap-3 py-3">
+                  <div className={`min-w-0 ${past ? "opacity-70" : ""}`}>
                     <p className="font-semibold">{s.title}</p>
                     <p className="text-sm text-muted">
                       {formatDateTime(s.startsAt)} PKT · {s.durationMinutes} min{s.host ? ` · ${s.host}` : ""}
@@ -40,6 +42,7 @@ async function Sessions() {
                     </p>
                   </div>
                   <InlineAction action={deleteSessionAction} fields={{ id: s._id }} label="Delete" confirm="Delete?" variant="danger" />
+                  {past && <RecordingForm id={s._id} recordingUrl={s.recordingUrl} />}
                 </li>
               );
             })}

@@ -31,7 +31,7 @@ async function Categories({ searchParams }) {
                 {c.image && <Image src={c.image} alt="" fill sizes="64px" className="object-cover" />}
               </span>
               <div className="min-w-0 flex-1">
-                <Link href={`/admin/categories/${c._id}`} className="font-bold hover:underline">
+                <Link href={`/admin/categories/${c._id}`} className="font-semibold hover:underline">
                   {c.name}
                 </Link>
                 <p className="text-xs text-muted">

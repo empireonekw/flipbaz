@@ -19,7 +19,7 @@ async function SecurityPanel() {
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.4fr]">
       <section aria-labelledby="rules-heading" className={adminCard}>
-        <h2 id="rules-heading" className="text-lg font-bold">
+        <h2 id="rules-heading" className="text-base font-semibold">
           Current rules
         </h2>
         <dl className="mt-3 space-y-2 text-sm">
@@ -61,7 +61,7 @@ async function SecurityPanel() {
       </section>
 
       <section aria-labelledby="blocks-heading" className={adminCard}>
-        <h2 id="blocks-heading" className="text-lg font-bold">
+        <h2 id="blocks-heading" className="text-base font-semibold">
           Blocked IPs ({blocks.length})
         </h2>
         <p className="mt-1 text-sm text-muted">Many mobile users in Pakistan share an IP. Unblock if a real seller is caught.</p>

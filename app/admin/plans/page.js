@@ -28,11 +28,11 @@ async function Plans({ searchParams }) {
           {plans.map((p) => (
             <li key={p._id} className={`${adminCard} ${p.active ? "" : "opacity-70"}`}>
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="font-bold">{p.name}</h2>
-                {p.isRecommended && <span className="rounded-full bg-accent-100 px-2 py-0.5 text-xs font-bold text-accent-800 dark:bg-accent-900/40 dark:text-accent-200">Most popular</span>}
-                {!p.active && <span className="rounded-full bg-surface-2 px-2 py-0.5 text-xs font-bold text-muted">Hidden</span>}
+                <h2 className="font-semibold">{p.name}</h2>
+                {p.isRecommended && <span className="rounded-full bg-accent-100 px-2 py-0.5 text-xs font-semibold text-accent-800 dark:bg-accent-900/40 dark:text-accent-200">Most popular</span>}
+                {!p.active && <span className="rounded-full bg-surface-2 px-2 py-0.5 text-xs font-semibold text-muted">Hidden</span>}
               </div>
-              <p className="mt-2 text-2xl font-extrabold">{formatPKR(p.totalPrice)}</p>
+              <p className="mt-2 text-2xl font-semibold">{formatPKR(p.totalPrice)}</p>
               <p className="text-sm text-muted">
                 {p.months} {p.months === 1 ? "month" : "months"} · {formatPKR(p.pricePerMonth)}/month
               </p>

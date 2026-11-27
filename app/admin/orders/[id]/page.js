@@ -32,7 +32,7 @@ async function AdminOrder({ params }) {
         ← All orders
       </Link>
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <h1 className="font-mono text-2xl font-extrabold tracking-tight sm:text-3xl">{order.orderNumber}</h1>
+        <h1 className="font-mono text-2xl font-semibold tracking-tight">{order.orderNumber}</h1>
         <OrderStatusBadge status={order.status} />
       </div>
       <p className="mt-1 text-sm text-muted">
@@ -43,14 +43,14 @@ async function AdminOrder({ params }) {
       <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-5">
           <section aria-labelledby="update-heading" className={`${adminCard} border-brand-200 dark:border-brand-800`}>
-            <h2 id="update-heading" className="mb-4 text-lg font-bold">
+            <h2 id="update-heading" className="mb-4 text-base font-semibold">
               Update order
             </h2>
             <OrderUpdateForm order={order} nextStatuses={allowedNextStatuses(order.status)} couriers={COURIERS} />
           </section>
 
           <section aria-labelledby="items-heading" className={adminCard}>
-            <h2 id="items-heading" className="text-lg font-bold">
+            <h2 id="items-heading" className="text-base font-semibold">
               Items to make
             </h2>
             <ul className="mt-3 divide-y divide-line">
@@ -66,7 +66,7 @@ async function AdminOrder({ params }) {
                     </p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="text-lg font-extrabold">×{it.qty}</p>
+                    <p className="text-lg font-semibold">×{it.qty}</p>
                     <p className="text-xs text-muted">{formatPKR(it.unitPrice)} each</p>
                   </div>
                 </li>
@@ -81,7 +81,7 @@ async function AdminOrder({ params }) {
                 <dt className="text-muted">Shipping</dt>
                 <dd>{formatPKR(order.shippingFee)}</dd>
               </div>
-              <div className="flex justify-between font-bold">
+              <div className="flex justify-between font-semibold">
                 <dt>Total</dt>
                 <dd>{formatPKR(order.total)}</dd>
               </div>
@@ -89,7 +89,7 @@ async function AdminOrder({ params }) {
           </section>
 
           <section aria-labelledby="payments-heading" className={adminCard}>
-            <h2 id="payments-heading" className="text-lg font-bold">
+            <h2 id="payments-heading" className="text-base font-semibold">
               Payments
             </h2>
             {payments.length === 0 ? (
@@ -125,7 +125,7 @@ async function AdminOrder({ params }) {
 
         <div className="space-y-5">
           <section aria-labelledby="ship-heading" className={adminCard}>
-            <h2 id="ship-heading" className="text-lg font-bold">
+            <h2 id="ship-heading" className="text-base font-semibold">
               Ship to
             </h2>
             <address className="mt-2 text-sm not-italic">
@@ -141,7 +141,7 @@ async function AdminOrder({ params }) {
           </section>
 
           <section aria-labelledby="seller-heading" className={adminCard}>
-            <h2 id="seller-heading" className="text-lg font-bold">
+            <h2 id="seller-heading" className="text-base font-semibold">
               Seller
             </h2>
             {order.seller ? (
@@ -161,7 +161,7 @@ async function AdminOrder({ params }) {
           </section>
 
           <section aria-labelledby="timeline-heading" className={adminCard}>
-            <h2 id="timeline-heading" className="mb-4 text-lg font-bold">
+            <h2 id="timeline-heading" className="mb-4 text-base font-semibold">
               Timeline
             </h2>
             <OrderTimeline status={order.status} history={order.statusHistory} />

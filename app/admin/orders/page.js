@@ -61,7 +61,7 @@ async function OrdersTable({ searchParams }) {
               {items.map((o) => (
                 <tr key={o._id} className="hover:bg-surface-2/40">
                   <td className="px-4 py-3">
-                    <Link href={`/admin/orders/${o._id}`} className="font-mono font-bold text-brand-700 hover:underline dark:text-brand-400">
+                    <Link href={`/admin/orders/${o._id}`} className="font-mono font-semibold text-brand-700 hover:underline dark:text-brand-400">
                       {o.orderNumber}
                     </Link>
                     <span className="block text-xs text-muted">{formatDate(o.createdAt)}</span>

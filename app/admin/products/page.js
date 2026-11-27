@@ -110,7 +110,7 @@ async function ProductsTable({ searchParams }) {
                   <td className="px-4 py-3 text-right font-semibold">{formatPKR(p.costPrice)}</td>
                   <td className="px-4 py-3 text-right">{formatPKR(p.suggestedRetailPrice)}</td>
                   <td className="px-4 py-3">
-                    <span className={`mr-2 text-xs font-bold ${p.active ? "text-brand-700 dark:text-brand-400" : "text-muted"}`}>
+                    <span className={`mr-2 text-xs font-semibold ${p.active ? "text-brand-700 dark:text-brand-400" : "text-muted"}`}>
                       {p.active ? "Visible" : "Hidden"}
                     </span>
                     <InlineAction action={toggleProductAction} fields={{ id: p._id }} label={p.active ? "Hide" : "Show"} />

@@ -4,7 +4,7 @@ import Link from "next/link";
  * Small presentational building blocks shared by admin pages (server-safe).
  */
 
-export const adminCard = "rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-sm";
+export const adminCard = "rounded-2xl border border-line bg-surface p-5 shadow-xs";
 
 /**
  * Page title row with optional description and action (e.g. "New product").
@@ -14,8 +14,8 @@ export function AdminHeader({ title, description, action }) {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">{title}</h1>
-        {description && <p className="mt-1 text-muted">{description}</p>}
+        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+        {description && <p className="mt-1 text-sm text-muted">{description}</p>}
       </div>
       {action}
     </div>

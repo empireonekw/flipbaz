@@ -62,14 +62,14 @@ async function PaymentsQueue({ searchParams }) {
               <div className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_auto]">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${statusBadge[p.status]}`}>{p.status}</span>
+                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${statusBadge[p.status]}`}>{p.status}</span>
                     <span className="text-sm font-semibold">
                       {p.purpose === "MEMBERSHIP"
                         ? `Membership · ${p.membership?.planSnapshot?.name ?? "plan"}`
                         : `Order ${p.order?.orderNumber ?? ""}`}
                     </span>
                   </div>
-                  <p className="mt-2 text-2xl font-extrabold">{formatPKR(p.amount)}</p>
+                  <p className="mt-2 text-2xl font-semibold">{formatPKR(p.amount)}</p>
                   <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
                     <div>
                       <dt className="text-muted">Seller</dt>
@@ -131,7 +131,7 @@ async function PaymentsQueue({ searchParams }) {
 export default function AdminPaymentsPage({ searchParams }) {
   return (
     <>
-      <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Payments</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">Payments</h1>
       <p className="mt-1 mb-6 text-muted">Check each screenshot against your JazzCash, EasyPaisa or bank statement before approving.</p>
       <Suspense fallback={<div className="h-64 animate-pulse rounded-2xl bg-surface-2" />}>
         <PaymentsQueue searchParams={searchParams} />

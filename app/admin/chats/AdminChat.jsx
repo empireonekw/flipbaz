@@ -151,7 +151,7 @@ export default function AdminChat({ initial }) {
                   className={`block w-full px-4 py-3 text-left hover:bg-surface-2 ${c._id === activeId ? "bg-surface-2" : ""}`}
                 >
                   <span className="flex items-center justify-between gap-2">
-                    <span className={`truncate text-sm ${c.adminUnread ? "font-bold" : "font-semibold"}`}>{c.seller?.name ?? "Seller"}</span>
+                    <span className={`truncate text-sm ${c.adminUnread ? "font-semibold" : "font-semibold"}`}>{c.seller?.name ?? "Seller"}</span>
                     <span className="shrink-0 text-xs text-muted">{ago(c.lastMessage?.at)}</span>
                   </span>
                   <span className="mt-0.5 flex items-center justify-between gap-2">
@@ -159,7 +159,7 @@ export default function AdminChat({ initial }) {
                       {typing[c._id] ?? `${c.lastMessage?.role === "ADMIN" ? "You: " : ""}${c.lastMessage?.body ?? ""}`}
                     </span>
                     {c.adminUnread > 0 && (
-                      <span className="shrink-0 rounded-full bg-accent-500 px-1.5 text-[11px] font-bold leading-5 text-white">{c.adminUnread}</span>
+                      <span className="shrink-0 rounded-full bg-accent-500 px-1.5 text-[11px] font-semibold leading-5 text-white">{c.adminUnread}</span>
                     )}
                   </span>
                 </button>
@@ -177,7 +177,7 @@ export default function AdminChat({ initial }) {
                 ←
               </button>
               <div className="min-w-0">
-                <p className="truncate font-bold">{active.seller?.name}</p>
+                <p className="truncate font-semibold">{active.seller?.name}</p>
                 <p className="truncate text-xs text-muted">
                   {active.seller?.email}
                   {active.seller?.storeName ? ` · ${active.seller.storeName}` : ""}

@@ -40,6 +40,7 @@ import {
   SecurityBlock,
   SavedProduct,
   ProductRequest,
+  ServiceRequest,
   addMonths,
   generateOrderNumber,
 } from "../lib/models/index.js";
@@ -53,7 +54,7 @@ const SEED_DIR = path.join(ROOT, "public", "seed");
 const OWNED_MODELS = [
   User, Plan, Membership, Payment, Category, Product, Order, ContactMessage,
   Notification, LiveSession, Conversation, ChatMessage, SecurityBlock,
-  SavedProduct, ProductRequest,
+  SavedProduct, ProductRequest, ServiceRequest,
 ];
 
 /** Read a required env var or exit with a helpful message (never prints values). */

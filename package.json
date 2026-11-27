@@ -9,7 +9,8 @@
     "start": "node --env-file-if-exists=.env.local server.js --production",
     "lint": "eslint",
     "seed": "node --env-file-if-exists=.env.local scripts/seed.js",
-    "seed:photos": "node --env-file-if-exists=.env.local scripts/seed-photos.js"
+    "seed:photos": "node --env-file-if-exists=.env.local scripts/seed-photos.js",
+    "security:unblock": "node --env-file-if-exists=.env.local scripts/security-unblock.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

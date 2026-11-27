@@ -46,7 +46,7 @@ async function Member({ params }) {
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.3fr]">
         <div className="space-y-5">
           <section aria-labelledby="mem-heading" className={adminCard}>
-            <h2 id="mem-heading" className="text-lg font-bold">
+            <h2 id="mem-heading" className="text-base font-semibold">
               Membership
             </h2>
             <p className="mt-2 text-sm">
@@ -69,7 +69,7 @@ async function Member({ params }) {
           </section>
 
           <section aria-labelledby="acct-heading" className={adminCard}>
-            <h2 id="acct-heading" className="text-lg font-bold">
+            <h2 id="acct-heading" className="text-base font-semibold">
               Account
             </h2>
             <dl className="mt-2 space-y-1 text-sm">
@@ -96,7 +96,7 @@ async function Member({ params }) {
           </section>
 
           <section aria-labelledby="hist-heading" className={adminCard}>
-            <h2 id="hist-heading" className="text-lg font-bold">
+            <h2 id="hist-heading" className="text-base font-semibold">
               Membership history
             </h2>
             {memberships.length === 0 ? (
@@ -119,7 +119,7 @@ async function Member({ params }) {
 
         <div className="space-y-5">
           <section aria-labelledby="orders-heading" className={adminCard}>
-            <h2 id="orders-heading" className="text-lg font-bold">
+            <h2 id="orders-heading" className="text-base font-semibold">
               Orders ({orderCount})
             </h2>
             {orders.length === 0 ? (
@@ -130,7 +130,7 @@ async function Member({ params }) {
                   <li key={o._id}>
                     <Link href={`/admin/orders/${o._id}`} className="flex items-center justify-between gap-3 py-2.5 hover:bg-surface-2/50">
                       <span>
-                        <span className="font-mono font-bold">{o.orderNumber}</span>
+                        <span className="font-mono font-semibold">{o.orderNumber}</span>
                         <span className="block text-xs text-muted">
                           {o.customerName}, {o.city} · {formatDate(o.createdAt)}
                         </span>
@@ -147,7 +147,7 @@ async function Member({ params }) {
           </section>
 
           <section aria-labelledby="pay-heading" className={adminCard}>
-            <h2 id="pay-heading" className="text-lg font-bold">
+            <h2 id="pay-heading" className="text-base font-semibold">
               Payments
             </h2>
             {payments.length === 0 ? (

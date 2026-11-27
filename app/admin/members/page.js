@@ -81,14 +81,14 @@ async function Members({ searchParams }) {
                       {u.name}
                     </Link>
                     <span className="block text-xs text-muted">{u.email}</span>
-                    {u.isActive === false && <span className="text-xs font-bold text-red-600 dark:text-red-400">Account disabled</span>}
+                    {u.isActive === false && <span className="text-xs font-semibold text-red-600 dark:text-red-400">Account disabled</span>}
                   </td>
                   <td className="px-4 py-3">
                     {u.phone ?? "—"}
                     <span className="block text-xs text-muted">{u.city}</span>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${stateCls[u.state]}`}>{stateLabel[u.state]}</span>
+                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${stateCls[u.state]}`}>{stateLabel[u.state]}</span>
                     {u.endsAt && <span className="block pt-1 text-xs text-muted">until {formatDate(u.endsAt)}</span>}
                   </td>
                   <td className="px-4 py-3 text-right font-semibold">{u.orderCount}</td>
